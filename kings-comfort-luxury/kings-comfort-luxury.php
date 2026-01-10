@@ -1,0 +1,230 @@
+<?php
+/**
+ * Plugin Name: Kings Comfort Luxury
+ * Plugin URI: https://kingscomfortluxury.com
+ * Description: A luxury service apartment booking plugin for Kings Comfort in Abuja, Nigeria. Features glass morphism design, Paystack integration, offline support, and mobile-first navigation.
+ * Version: 1.0.0
+ * Author: Kings Comfort Luxury
+ * Author URI: https://kingscomfortluxury.com
+ * License: GPL v2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: kings-comfort-luxury
+ * Domain Path: /languages
+ */
+
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// Plugin constants
+define('KCL_VERSION', '1.0.0');
+define('KCL_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('KCL_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('KCL_PRIMARY_COLOR', '#E2C369');
+define('KCL_BACKGROUND_COLOR', '#0A0A14');
+define('KCL_TEXT_COLOR', '#FFFFFF');
+define('KCL_WHATSAPP_NUMBER', '2348037100768');
+
+// Include required files
+require_once KCL_PLUGIN_DIR . 'includes/class-kcl-activator.php';
+require_once KCL_PLUGIN_DIR . 'includes/class-kcl-deactivator.php';
+require_once KCL_PLUGIN_DIR . 'includes/class-kcl-post-types.php';
+require_once KCL_PLUGIN_DIR . 'includes/class-kcl-shortcodes.php';
+require_once KCL_PLUGIN_DIR . 'includes/class-kcl-booking.php';
+require_once KCL_PLUGIN_DIR . 'includes/class-kcl-paystack.php';
+require_once KCL_PLUGIN_DIR . 'includes/class-kcl-ajax.php';
+require_once KCL_PLUGIN_DIR . 'includes/class-kcl-offline.php';
+require_once KCL_PLUGIN_DIR . 'admin/class-kcl-admin.php';
+
+/**
+ * Main Plugin Class
+ */
+class Kings_Comfort_Luxury {
+    
+    private static $instance = null;
+    
+    public static function get_instance() {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+    
+    private function __construct() {
+        $this->init_hooks();
+    }
+    
+    private function init_hooks() {
+        // Activation and deactivation hooks
+        register_activation_hook(__FILE__, array('KCL_Activator', 'activate'));
+        register_deactivation_hook(__FILE__, array('KCL_Deactivator', 'deactivate'));
+        
+        // Init hooks
+        add_action('init', array($this, 'init'));
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_assets'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_assets'));
+        add_action('wp_head', array($this, 'add_favicon'));
+        add_action('wp_footer', array($this, 'add_widgets'));
+        add_action('wp_footer', array($this, 'add_mobile_navigation'));
+        
+        // Initialize components
+        KCL_Post_Types::init();
+        KCL_Shortcodes::init();
+        KCL_Booking::init();
+        KCL_Ajax::init();
+        KCL_Offline::init();
+        
+        if (is_admin()) {
+            KCL_Admin::init();
+        }
+    }
+    
+    public function init() {
+        // Load text domain for translations
+        load_plugin_textdomain('kings-comfort-luxury', false, dirname(plugin_basename(__FILE__)) . '/languages');
+        
+        // Register menus
+        register_nav_menus(array(
+            'kcl-primary-menu' => __('KCL Primary Menu', 'kings-comfort-luxury'),
+            'kcl-footer-menu' => __('KCL Footer Menu', 'kings-comfort-luxury'),
+        ));
+    }
+    
+    public function enqueue_frontend_assets() {
+        // Main styles
+        wp_enqueue_style('kcl-main-styles', KCL_PLUGIN_URL . 'public/css/main.css', array(), KCL_VERSION);
+        wp_enqueue_style('kcl-animations', KCL_PLUGIN_URL . 'public/css/animations.css', array(), KCL_VERSION);
+        wp_enqueue_style('kcl-responsive', KCL_PLUGIN_URL . 'public/css/responsive.css', array('kcl-main-styles'), KCL_VERSION);
+        
+        // Google Fonts - Elegant luxury fonts
+        wp_enqueue_style('kcl-google-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap', array(), null);
+        
+        // Font Awesome for icons
+        wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
+        
+        // Main scripts
+        wp_enqueue_script('kcl-main-scripts', KCL_PLUGIN_URL . 'public/js/main.js', array('jquery'), KCL_VERSION, true);
+        wp_enqueue_script('kcl-animations-js', KCL_PLUGIN_URL . 'public/js/animations.js', array('jquery'), KCL_VERSION, true);
+        wp_enqueue_script('kcl-booking-js', KCL_PLUGIN_URL . 'public/js/booking.js', array('jquery'), KCL_VERSION, true);
+        wp_enqueue_script('kcl-offline-js', KCL_PLUGIN_URL . 'public/js/offline.js', array('jquery'), KCL_VERSION, true);
+        
+        // Paystack script
+        wp_enqueue_script('paystack', 'https://js.paystack.co/v1/inline.js', array(), null, true);
+        
+        // Localize script for AJAX
+        wp_localize_script('kcl-main-scripts', 'kcl_ajax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('kcl_nonce'),
+            'plugin_url' => KCL_PLUGIN_URL,
+            'whatsapp_number' => KCL_WHATSAPP_NUMBER,
+            'primary_color' => KCL_PRIMARY_COLOR,
+            'background_color' => KCL_BACKGROUND_COLOR,
+        ));
+    }
+    
+    public function enqueue_admin_assets($hook) {
+        wp_enqueue_style('kcl-admin-styles', KCL_PLUGIN_URL . 'admin/css/admin.css', array(), KCL_VERSION);
+        wp_enqueue_script('kcl-admin-scripts', KCL_PLUGIN_URL . 'admin/js/admin.js', array('jquery'), KCL_VERSION, true);
+        
+        wp_localize_script('kcl-admin-scripts', 'kcl_admin_ajax', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('kcl_admin_nonce'),
+        ));
+    }
+    
+    public function add_favicon() {
+        $favicon_url = KCL_PLUGIN_URL . 'public/images/logo.png';
+        ?>
+        <link rel="icon" type="image/png" href="<?php echo esc_url($favicon_url); ?>">
+        <link rel="apple-touch-icon" href="<?php echo esc_url($favicon_url); ?>">
+        <meta name="theme-color" content="<?php echo esc_attr(KCL_PRIMARY_COLOR); ?>">
+        <?php
+    }
+    
+    public function add_widgets() {
+        ?>
+        <!-- Scroll to Top with Progress -->
+        <div id="kcl-scroll-top" class="kcl-scroll-top">
+            <svg class="kcl-scroll-progress" viewBox="0 0 100 100">
+                <polygon class="kcl-progress-bg" points="50,5 95,50 75,95 25,95 5,50"/>
+                <polygon class="kcl-progress-bar" points="50,5 95,50 75,95 25,95 5,50"/>
+            </svg>
+            <i class="fas fa-chevron-up"></i>
+        </div>
+        
+        <!-- WhatsApp Widget -->
+        <a href="https://wa.me/<?php echo esc_attr(KCL_WHATSAPP_NUMBER); ?>?text=Hello%20Kings%20Comfort%20Luxury" 
+           target="_blank" 
+           class="kcl-whatsapp-widget" 
+           aria-label="<?php esc_attr_e('Contact us on WhatsApp', 'kings-comfort-luxury'); ?>">
+            <i class="fab fa-whatsapp"></i>
+            <span class="kcl-whatsapp-pulse"></span>
+        </a>
+        <?php
+    }
+    
+    public function add_mobile_navigation() {
+        ?>
+        <!-- Mobile Bottom Navigation -->
+        <nav class="kcl-mobile-nav" aria-label="<?php esc_attr_e('Mobile Navigation', 'kings-comfort-luxury'); ?>">
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="kcl-mobile-nav-item <?php echo is_front_page() ? 'active' : ''; ?>">
+                <i class="fas fa-home"></i>
+                <span><?php esc_html_e('Home', 'kings-comfort-luxury'); ?></span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('apartments') ? 'active' : ''; ?>">
+                <i class="fas fa-building"></i>
+                <span><?php esc_html_e('Apartment', 'kings-comfort-luxury'); ?></span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/booking/')); ?>" class="kcl-mobile-nav-item kcl-mobile-nav-book <?php echo is_page('booking') ? 'active' : ''; ?>">
+                <i class="fas fa-calendar-check"></i>
+                <span><?php esc_html_e('Book', 'kings-comfort-luxury'); ?></span>
+            </a>
+            <a href="<?php echo esc_url(home_url('/profile/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('profile') ? 'active' : ''; ?>">
+                <i class="fas fa-user"></i>
+                <span><?php esc_html_e('Profile', 'kings-comfort-luxury'); ?></span>
+            </a>
+        </nav>
+        <?php
+    }
+}
+
+// Initialize plugin
+function kcl_init() {
+    return Kings_Comfort_Luxury::get_instance();
+}
+
+// Start the plugin
+add_action('plugins_loaded', 'kcl_init');
+
+// Plugin helper functions
+function kcl_get_logo_url($type = 'png') {
+    if ($type === 'jpeg' || $type === 'jpg') {
+        return KCL_PLUGIN_URL . 'public/images/logo.jpeg';
+    }
+    return KCL_PLUGIN_URL . 'public/images/logo.png';
+}
+
+function kcl_get_apartments($args = array()) {
+    $defaults = array(
+        'post_type' => 'kcl_apartment',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+    );
+    $args = wp_parse_args($args, $defaults);
+    return new WP_Query($args);
+}
+
+function kcl_get_amenities($args = array()) {
+    $defaults = array(
+        'post_type' => 'kcl_amenity',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+    );
+    $args = wp_parse_args($args, $defaults);
+    return new WP_Query($args);
+}
+
+function kcl_format_price($price) {
+    return '₦' . number_format($price, 0, '.', ',');
+}
