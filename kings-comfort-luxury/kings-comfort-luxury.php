@@ -68,6 +68,10 @@ class Kings_Comfort_Luxury {
         add_action('wp_footer', array($this, 'add_widgets'));
         add_action('wp_footer', array($this, 'add_mobile_navigation'));
         
+        // Add header and footer to all frontend pages
+        add_action('wp_body_open', array($this, 'add_site_header'));
+        add_action('wp_footer', array($this, 'add_site_footer'), 5);
+        
         // Initialize components
         KCL_Post_Types::init();
         KCL_Shortcodes::init();
@@ -187,6 +191,78 @@ class Kings_Comfort_Luxury {
                 <span><?php esc_html_e('Profile', 'kings-comfort-luxury'); ?></span>
             </a>
         </nav>
+        <?php
+    }
+    
+    public function add_site_header() {
+        // Only add header on frontend, not admin
+        if (is_admin()) {
+            return;
+        }
+        ?>
+        <header class="kcl-header" id="kcl-header">
+            <div class="kcl-container">
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="kcl-logo">
+                    <img src="<?php echo esc_url(kcl_get_logo_url('png')); ?>" alt="Kings Comfort Luxury" class="kcl-logo-img kcl-sparkle">
+                </a>
+                <nav class="kcl-nav" id="kcl-nav">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="kcl-nav-link<?php echo is_front_page() ? ' active' : ''; ?>">Home</a>
+                    <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-nav-link<?php echo is_page('apartments') ? ' active' : ''; ?>">Apartments</a>
+                    <a href="<?php echo esc_url(home_url('/amenities/')); ?>" class="kcl-nav-link<?php echo is_page('amenities') ? ' active' : ''; ?>">Amenities</a>
+                    <a href="<?php echo esc_url(home_url('/concierge/')); ?>" class="kcl-nav-link<?php echo is_page('concierge') ? ' active' : ''; ?>">Concierge</a>
+                    <a href="<?php echo esc_url(home_url('/loyalty/')); ?>" class="kcl-nav-link<?php echo is_page('loyalty') ? ' active' : ''; ?>">Loyalty</a>
+                </nav>
+                <a href="<?php echo esc_url(home_url('/booking/')); ?>" class="kcl-btn kcl-btn-primary">Book Now</a>
+                <button class="kcl-hamburger" id="kcl-hamburger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </header>
+        <?php
+    }
+    
+    public function add_site_footer() {
+        // Only add footer on frontend, not admin
+        if (is_admin()) {
+            return;
+        }
+        ?>
+        <footer class="kcl-footer">
+            <div class="kcl-container">
+                <div class="kcl-footer-grid">
+                    <div class="kcl-footer-col">
+                        <img src="<?php echo esc_url(kcl_get_logo_url('png')); ?>" alt="Kings Comfort Luxury" class="kcl-footer-logo">
+                        <p><?php esc_html_e('Experience luxury living in the heart of Abuja. Your comfort is our priority.', 'kings-comfort-luxury'); ?></p>
+                    </div>
+                    <div class="kcl-footer-col">
+                        <h4><?php esc_html_e('Quick Links', 'kings-comfort-luxury'); ?></h4>
+                        <a href="<?php echo esc_url(home_url('/apartments/')); ?>"><?php esc_html_e('Apartments', 'kings-comfort-luxury'); ?></a>
+                        <a href="<?php echo esc_url(home_url('/amenities/')); ?>"><?php esc_html_e('Amenities', 'kings-comfort-luxury'); ?></a>
+                        <a href="<?php echo esc_url(home_url('/booking/')); ?>"><?php esc_html_e('Book Now', 'kings-comfort-luxury'); ?></a>
+                        <a href="<?php echo esc_url(home_url('/concierge/')); ?>"><?php esc_html_e('Concierge', 'kings-comfort-luxury'); ?></a>
+                        <a href="<?php echo esc_url(home_url('/loyalty/')); ?>"><?php esc_html_e('Loyalty Program', 'kings-comfort-luxury'); ?></a>
+                    </div>
+                    <div class="kcl-footer-col">
+                        <h4><?php esc_html_e('Contact Info', 'kings-comfort-luxury'); ?></h4>
+                        <p><i class="fas fa-map-marker-alt"></i> <?php esc_html_e('Kabusa, Abuja, Nigeria', 'kings-comfort-luxury'); ?></p>
+                        <p><i class="fas fa-phone"></i> +234 803 710 0768</p>
+                        <p><i class="fas fa-envelope"></i> info@kingscomfortluxury.com</p>
+                    </div>
+                    <div class="kcl-footer-col">
+                        <h4><?php esc_html_e('Follow Us', 'kings-comfort-luxury'); ?></h4>
+                        <div class="kcl-social-links">
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="kcl-footer-bottom">
+                    <p>&copy; <?php echo esc_html(gmdate('Y')); ?> Kings Comfort Luxury. <?php esc_html_e('All rights reserved.', 'kings-comfort-luxury'); ?></p>
+                </div>
+            </div>
+        </footer>
         <?php
     }
 }
