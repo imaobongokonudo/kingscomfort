@@ -74,11 +74,11 @@
     }
     
     .kcl-mobile-nav {
-        display: flex;
+        display: block;
     }
     
     body {
-        padding-bottom: 80px;
+        padding-bottom: 70px;
     }
     
     .kcl-section {

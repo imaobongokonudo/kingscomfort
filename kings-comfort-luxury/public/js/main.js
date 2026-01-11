@@ -41,15 +41,16 @@
             });
         },
 
-        // Scroll to Top
+        // Scroll to Top with Progress Animation
         initScrollTop: function() {
             const $scrollTop = $('#kcl-scroll-top');
             const $progressBar = $('.kcl-progress-bar');
+            const $progressFill = $('.kcl-progress-fill');
 
             $(window).on('scroll', function() {
                 const scrollTop = $(this).scrollTop();
                 const docHeight = $(document).height() - $(window).height();
-                const scrollPercent = (scrollTop / docHeight) * 100;
+                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
 
                 // Show/hide button
                 if (scrollTop > 300) {
@@ -58,13 +59,20 @@
                     $scrollTop.removeClass('visible');
                 }
 
-                // Update progress
-                const dashOffset = 300 - (scrollPercent * 3);
-                $progressBar.css('stroke-dashoffset', dashOffset);
+                // Update progress bar (rect perimeter = 160)
+                const perimeter = 160;
+                const dashOffset = perimeter - (scrollPercent / 100 * perimeter);
+                $progressBar.css({
+                    'stroke-dasharray': perimeter,
+                    'stroke-dashoffset': dashOffset
+                });
+                
+                // Update fill effect
+                $progressFill.css('height', scrollPercent + '%');
             });
 
             $scrollTop.on('click', function() {
-                $('html, body').animate({ scrollTop: 0 }, 600);
+                $('html, body').animate({ scrollTop: 0 }, 600, 'swing');
             });
         },
 

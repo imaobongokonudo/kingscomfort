@@ -152,11 +152,12 @@ class Kings_Comfort_Luxury {
         ?>
         <!-- Scroll to Top with Progress -->
         <div id="kcl-scroll-top" class="kcl-scroll-top">
-            <svg class="kcl-scroll-progress" viewBox="0 0 100 100">
-                <polygon class="kcl-progress-bg" points="50,5 95,50 75,95 25,95 5,50"/>
-                <polygon class="kcl-progress-bar" points="50,5 95,50 75,95 25,95 5,50"/>
+            <svg class="kcl-scroll-progress" viewBox="0 0 48 48">
+                <rect class="kcl-progress-bg" x="4" y="4" width="40" height="40" rx="10" ry="10"/>
+                <rect class="kcl-progress-bar" x="4" y="4" width="40" height="40" rx="10" ry="10"/>
             </svg>
-            <i class="fas fa-chevron-up"></i>
+            <div class="kcl-progress-fill"></div>
+            <i class="fas fa-arrow-up"></i>
         </div>
         
         <!-- WhatsApp Widget -->
@@ -174,22 +175,24 @@ class Kings_Comfort_Luxury {
         ?>
         <!-- Mobile Bottom Navigation -->
         <nav class="kcl-mobile-nav" aria-label="<?php esc_attr_e('Mobile Navigation', 'kings-comfort-luxury'); ?>">
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="kcl-mobile-nav-item <?php echo is_front_page() ? 'active' : ''; ?>">
-                <i class="fas fa-home"></i>
-                <span><?php esc_html_e('Home', 'kings-comfort-luxury'); ?></span>
-            </a>
-            <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('apartments') ? 'active' : ''; ?>">
-                <i class="fas fa-building"></i>
-                <span><?php esc_html_e('Apartment', 'kings-comfort-luxury'); ?></span>
-            </a>
-            <a href="<?php echo esc_url(home_url('/booking/')); ?>" class="kcl-mobile-nav-item kcl-mobile-nav-book <?php echo is_page('booking') ? 'active' : ''; ?>">
-                <i class="fas fa-calendar-check"></i>
-                <span><?php esc_html_e('Book', 'kings-comfort-luxury'); ?></span>
-            </a>
-            <a href="<?php echo esc_url(home_url('/profile/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('profile') ? 'active' : ''; ?>">
-                <i class="fas fa-user"></i>
-                <span><?php esc_html_e('Profile', 'kings-comfort-luxury'); ?></span>
-            </a>
+            <div class="kcl-mobile-nav-inner">
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="kcl-mobile-nav-item <?php echo is_front_page() ? 'active' : ''; ?>">
+                    <i class="fas fa-home"></i>
+                    <span><?php esc_html_e('Home', 'kings-comfort-luxury'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('apartments') ? 'active' : ''; ?>">
+                    <i class="fas fa-building"></i>
+                    <span><?php esc_html_e('Apartments', 'kings-comfort-luxury'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/booking/')); ?>" class="kcl-mobile-nav-item kcl-mobile-nav-book <?php echo is_page('booking') ? 'active' : ''; ?>">
+                    <i class="fas fa-calendar-check"></i>
+                    <span><?php esc_html_e('Book', 'kings-comfort-luxury'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/profile/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('profile') ? 'active' : ''; ?>">
+                    <i class="fas fa-user"></i>
+                    <span><?php esc_html_e('Profile', 'kings-comfort-luxury'); ?></span>
+                </a>
+            </div>
         </nav>
         <?php
     }
