@@ -212,6 +212,7 @@ class Kings_Comfort_Luxury {
                     <a href="<?php echo esc_url(home_url('/')); ?>" class="kcl-nav-link<?php echo is_front_page() ? ' active' : ''; ?>">Home</a>
                     <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-nav-link<?php echo is_page('apartments') ? ' active' : ''; ?>">Apartments</a>
                     <a href="<?php echo esc_url(home_url('/amenities/')); ?>" class="kcl-nav-link<?php echo is_page('amenities') ? ' active' : ''; ?>">Amenities</a>
+                    <a href="<?php echo esc_url(home_url('/about/')); ?>" class="kcl-nav-link<?php echo is_page('about') ? ' active' : ''; ?>">About</a>
                     <a href="<?php echo esc_url(home_url('/concierge/')); ?>" class="kcl-nav-link<?php echo is_page('concierge') ? ' active' : ''; ?>">Concierge</a>
                     <a href="<?php echo esc_url(home_url('/loyalty/')); ?>" class="kcl-nav-link<?php echo is_page('loyalty') ? ' active' : ''; ?>">Loyalty</a>
                 </nav>
@@ -241,6 +242,7 @@ class Kings_Comfort_Luxury {
                         <h4><?php esc_html_e('Quick Links', 'kings-comfort-luxury'); ?></h4>
                         <a href="<?php echo esc_url(home_url('/apartments/')); ?>"><?php esc_html_e('Apartments', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/amenities/')); ?>"><?php esc_html_e('Amenities', 'kings-comfort-luxury'); ?></a>
+                        <a href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Us', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/booking/')); ?>"><?php esc_html_e('Book Now', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/concierge/')); ?>"><?php esc_html_e('Concierge', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/loyalty/')); ?>"><?php esc_html_e('Loyalty Program', 'kings-comfort-luxury'); ?></a>

@@ -19,6 +19,7 @@ class KCL_Shortcodes {
         add_shortcode('kcl_concierge', array(__CLASS__, 'concierge'));
         add_shortcode('kcl_loyalty', array(__CLASS__, 'loyalty'));
         add_shortcode('kcl_guest_profile', array(__CLASS__, 'guest_profile'));
+        add_shortcode('kcl_about', array(__CLASS__, 'about'));
     }
     
     public static function header($atts) {
@@ -696,6 +697,138 @@ class KCL_Shortcodes {
                     <div class="kcl-profile-bookings kcl-glass-card">
                         <h3><i class="fas fa-history"></i> Booking History</h3>
                         <div id="profile-bookings-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <?php
+        return ob_get_clean();
+    }
+    
+    public static function about($atts) {
+        ob_start();
+        ?>
+        <section class="kcl-page-section kcl-about-page">
+            <div class="kcl-container">
+                <h1 class="kcl-page-title">About <span class="kcl-gold">Kings Comfort Luxury</span></h1>
+                <p class="kcl-page-subtitle">Your premier destination for luxury service apartments in Abuja, Nigeria</p>
+                
+                <!-- About Hero -->
+                <div class="kcl-about-hero kcl-glass-card">
+                    <div class="kcl-about-hero-content">
+                        <h2>Welcome to <span class="kcl-gold">Unparalleled Luxury</span></h2>
+                        <p>Kings Comfort Luxury represents the pinnacle of service apartment living in the heart of Abuja. Founded with a vision to redefine hospitality, we offer discerning travelers and residents an experience that seamlessly blends comfort, elegance, and exceptional service.</p>
+                        <p>Located in the prestigious Kabusa area, our apartments provide the perfect sanctuary for business executives, diplomats, tourists, and families seeking a home away from home with all the amenities of a five-star hotel.</p>
+                    </div>
+                    <div class="kcl-about-hero-image">
+                        <div class="kcl-image-placeholder"><i class="fas fa-building"></i></div>
+                    </div>
+                </div>
+                
+                <!-- Our Story -->
+                <div class="kcl-about-section">
+                    <h2 class="kcl-section-title">Our <span class="kcl-gold">Story</span></h2>
+                    <div class="kcl-about-story kcl-glass-card">
+                        <div class="kcl-about-story-image">
+                            <div class="kcl-image-placeholder"><i class="fas fa-crown"></i></div>
+                        </div>
+                        <div class="kcl-about-story-content">
+                            <p>Kings Comfort Luxury was born from a simple yet powerful idea: to create a space where every guest feels like royalty. Our founders, with decades of experience in the hospitality industry, envisioned apartments that would exceed expectations in every way.</p>
+                            <p>From the moment you step into any of our properties, you'll experience the warmth of Nigerian hospitality combined with international standards of luxury. Every detail, from the premium furnishings to the personalized services, has been carefully curated to ensure your comfort.</p>
+                            <p>Today, we're proud to be recognized as one of Abuja's premier service apartment providers, trusted by discerning guests from around the world.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mission & Vision -->
+                <div class="kcl-about-mission">
+                    <div class="kcl-mission-card kcl-glass-card">
+                        <div class="kcl-mission-icon"><i class="fas fa-bullseye"></i></div>
+                        <h3>Our Mission</h3>
+                        <p>To provide exceptional luxury accommodation experiences that make every guest feel at home while enjoying world-class amenities and personalized service that exceeds expectations.</p>
+                    </div>
+                    <div class="kcl-mission-card kcl-glass-card">
+                        <div class="kcl-mission-icon"><i class="fas fa-eye"></i></div>
+                        <h3>Our Vision</h3>
+                        <p>To be the leading luxury service apartment brand in Nigeria, setting the standard for excellence in hospitality and creating memorable experiences for every guest.</p>
+                    </div>
+                    <div class="kcl-mission-card kcl-glass-card">
+                        <div class="kcl-mission-icon"><i class="fas fa-heart"></i></div>
+                        <h3>Our Values</h3>
+                        <p>Excellence, Integrity, Hospitality, and Innovation guide everything we do. We believe in treating every guest as family and going above and beyond to create lasting impressions.</p>
+                    </div>
+                </div>
+                
+                <!-- Why Choose Us -->
+                <div class="kcl-about-section">
+                    <h2 class="kcl-section-title">Why Choose <span class="kcl-gold">Us</span></h2>
+                    <div class="kcl-why-choose-grid">
+                        <div class="kcl-why-card kcl-glass-card">
+                            <i class="fas fa-gem"></i>
+                            <h4>Premium Quality</h4>
+                            <p>Every apartment features high-end furnishings, modern appliances, and premium amenities</p>
+                        </div>
+                        <div class="kcl-why-card kcl-glass-card">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h4>Prime Location</h4>
+                            <p>Strategically located in Kabusa, Abuja with easy access to major business and leisure destinations</p>
+                        </div>
+                        <div class="kcl-why-card kcl-glass-card">
+                            <i class="fas fa-concierge-bell"></i>
+                            <h4>24/7 Concierge</h4>
+                            <p>Round-the-clock dedicated concierge service to attend to your every need</p>
+                        </div>
+                        <div class="kcl-why-card kcl-glass-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Security & Privacy</h4>
+                            <p>Advanced security systems and complete privacy for peace of mind during your stay</p>
+                        </div>
+                        <div class="kcl-why-card kcl-glass-card">
+                            <i class="fas fa-wifi"></i>
+                            <h4>Modern Connectivity</h4>
+                            <p>High-speed internet and smart home features throughout all properties</p>
+                        </div>
+                        <div class="kcl-why-card kcl-glass-card">
+                            <i class="fas fa-award"></i>
+                            <h4>Award-Winning Service</h4>
+                            <p>Recognized excellence in hospitality with consistently outstanding reviews</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Section -->
+                <div class="kcl-about-section">
+                    <h2 class="kcl-section-title">Our <span class="kcl-gold">Team</span></h2>
+                    <p class="kcl-section-subtitle">Meet the dedicated professionals behind your exceptional experience</p>
+                    <div class="kcl-team-grid">
+                        <div class="kcl-team-card kcl-glass-card">
+                            <div class="kcl-team-image"><div class="kcl-image-placeholder"><i class="fas fa-user"></i></div></div>
+                            <h4>Management Team</h4>
+                            <p class="kcl-team-role">Leadership & Strategy</p>
+                            <p>Our experienced management team ensures every aspect of your stay meets the highest standards of luxury and comfort.</p>
+                        </div>
+                        <div class="kcl-team-card kcl-glass-card">
+                            <div class="kcl-team-image"><div class="kcl-image-placeholder"><i class="fas fa-user"></i></div></div>
+                            <h4>Concierge Team</h4>
+                            <p class="kcl-team-role">Guest Services</p>
+                            <p>Available 24/7 to assist with reservations, special requests, and local recommendations to enhance your stay.</p>
+                        </div>
+                        <div class="kcl-team-card kcl-glass-card">
+                            <div class="kcl-team-image"><div class="kcl-image-placeholder"><i class="fas fa-user"></i></div></div>
+                            <h4>Housekeeping Team</h4>
+                            <p class="kcl-team-role">Cleanliness & Comfort</p>
+                            <p>Our meticulous housekeeping staff maintains impeccable cleanliness standards throughout all properties.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CTA -->
+                <div class="kcl-about-cta kcl-glass-card">
+                    <h2>Ready to Experience <span class="kcl-gold">True Luxury</span>?</h2>
+                    <p>Book your stay today and discover why Kings Comfort Luxury is Abuja's premier choice for discerning travelers.</p>
+                    <div class="kcl-about-cta-btns">
+                        <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-btn kcl-btn-primary">View Apartments</a>
+                        <a href="<?php echo esc_url(home_url('/booking/')); ?>" class="kcl-btn kcl-btn-outline">Book Now</a>
                     </div>
                 </div>
             </div>

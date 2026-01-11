@@ -118,6 +118,25 @@ i[class*="fa-"] {
     background: linear-gradient(135deg, var(--kcl-primary) 0%, var(--kcl-primary-dark) 100%);
     color: var(--kcl-background);
     box-shadow: 0 4px 20px rgba(226, 195, 105, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.kcl-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: btn-sparkle 3s ease-in-out infinite;
+}
+
+@keyframes btn-sparkle {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
 }
 
 .kcl-btn-primary:hover {
@@ -167,7 +186,7 @@ i[class*="fa-"] {
 }
 
 .kcl-logo-img {
-    height: 50px;
+    height: 60px;
     width: auto;
     filter: drop-shadow(0 0 10px rgba(226, 195, 105, 0.3));
 }
@@ -228,6 +247,16 @@ i[class*="fa-"] {
     border: none;
     cursor: pointer;
     padding: 5px;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.kcl-hamburger:focus,
+.kcl-hamburger:active,
+.kcl-hamburger:hover {
+    background: none;
+    outline: none;
+    box-shadow: none;
 }
 
 .kcl-hamburger span {
@@ -755,7 +784,7 @@ i[class*="fa-"] {
 }
 
 .kcl-footer-logo {
-    height: 50px;
+    height: 70px;
     margin-bottom: 16px;
 }
 
@@ -1389,4 +1418,228 @@ i[class*="fa-"] {
     font-size: 60px;
     margin-bottom: 20px;
     opacity: 0.5;
+}
+
+/* About Page Styles */
+.kcl-about-page {
+    padding-bottom: 100px;
+}
+
+.kcl-about-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    padding: 50px;
+    margin-bottom: 60px;
+    align-items: center;
+}
+
+.kcl-about-hero-content h2 {
+    font-family: var(--kcl-font-heading);
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.kcl-about-hero-content p {
+    color: var(--kcl-text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.kcl-about-hero-image .kcl-image-placeholder {
+    height: 300px;
+}
+
+.kcl-about-section {
+    margin-bottom: 60px;
+}
+
+.kcl-about-story {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 50px;
+    padding: 40px;
+    align-items: center;
+}
+
+.kcl-about-story-image .kcl-image-placeholder {
+    height: 280px;
+}
+
+.kcl-about-story-content p {
+    color: var(--kcl-text-muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.kcl-about-mission {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.kcl-mission-card {
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.kcl-mission-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: rgba(226, 195, 105, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kcl-mission-icon i {
+    font-size: 32px;
+    color: var(--kcl-primary);
+}
+
+.kcl-mission-card h3 {
+    font-family: var(--kcl-font-heading);
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.kcl-mission-card p {
+    color: var(--kcl-text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.kcl-why-choose-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.kcl-why-card {
+    padding: 35px 25px;
+    text-align: center;
+}
+
+.kcl-why-card i {
+    font-size: 36px;
+    color: var(--kcl-primary);
+    margin-bottom: 18px;
+}
+
+.kcl-why-card h4 {
+    font-family: var(--kcl-font-heading);
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.kcl-why-card p {
+    color: var(--kcl-text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.kcl-team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.kcl-team-card {
+    padding: 30px;
+    text-align: center;
+}
+
+.kcl-team-image {
+    margin-bottom: 20px;
+}
+
+.kcl-team-image .kcl-image-placeholder {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+.kcl-team-card h4 {
+    font-family: var(--kcl-font-heading);
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.kcl-team-role {
+    color: var(--kcl-primary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.kcl-team-card p:last-child {
+    color: var(--kcl-text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.kcl-about-cta {
+    padding: 60px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(226, 195, 105, 0.1), transparent);
+}
+
+.kcl-about-cta h2 {
+    font-family: var(--kcl-font-heading);
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.kcl-about-cta p {
+    color: var(--kcl-text-muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.kcl-about-cta-btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Responsive About Page */
+@media (max-width: 992px) {
+    .kcl-about-hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .kcl-about-story {
+        grid-template-columns: 1fr;
+    }
+    
+    .kcl-about-mission {
+        grid-template-columns: 1fr;
+    }
+    
+    .kcl-why-choose-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .kcl-team-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .kcl-why-choose-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .kcl-about-cta-btns {
+        flex-direction: column;
+        align-items: center;
+    }
 }

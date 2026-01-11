@@ -125,6 +125,10 @@ class KCL_Activator {
                 'title' => 'Guest Profile',
                 'content' => '[kcl_guest_profile]',
             ),
+            'about' => array(
+                'title' => 'About Us',
+                'content' => '[kcl_about]',
+            ),
         );
         
         foreach ($pages as $slug => $page_data) {

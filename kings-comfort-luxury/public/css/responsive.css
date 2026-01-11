@@ -37,7 +37,7 @@
         top: 80px;
         left: 0;
         right: 0;
-        background: var(--kcl-background-light);
+        background: rgba(10, 10, 20, 0.98);
         flex-direction: column;
         align-items: center;
         padding: 30px;
@@ -46,6 +46,8 @@
         opacity: 0;
         transition: all 0.3s ease;
         border-bottom: 1px solid var(--kcl-glass-border);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
     }
     
     .kcl-nav.active {
@@ -79,10 +81,26 @@
     
     body {
         padding-bottom: 70px;
+        background-color: var(--kcl-background);
+    }
+    
+    /* Ensure proper contrast for text on mobile */
+    .kcl-glass-card {
+        background: rgba(20, 20, 32, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .kcl-card-content h3,
+    .kcl-card-content p,
+    .kcl-service-card h3,
+    .kcl-tier-card h3,
+    .kcl-concierge-card h3 {
+        color: var(--kcl-text);
     }
     
     .kcl-section {
         padding: 60px 15px;
+        background-color: var(--kcl-background);
     }
     
     .kcl-page-section {

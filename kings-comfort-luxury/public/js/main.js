@@ -1,18 +1,26 @@
 /**
  * Kings Comfort Luxury - Main JavaScript
+ * Optimized for blazing fast performance
  */
 
 (function($) {
     'use strict';
 
-    // DOM Ready
-    $(document).ready(function() {
+    // DOM Ready - using native DOMContentLoaded for speed
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            KCL.init();
+        });
+    } else {
         KCL.init();
-    });
+    }
 
     // Main Object
     const KCL = {
+        scrollThrottle: null,
+        
         init: function() {
+            this.initLazyLoading();
             this.initHeader();
             this.initScrollTop();
             this.initMobileNav();
@@ -21,58 +29,114 @@
             this.initQuickBookingForm();
             this.initProfileLookup();
             this.initFilters();
+            this.preloadCriticalAssets();
+        },
+        
+        // Preload critical assets for faster subsequent navigation
+        preloadCriticalAssets: function() {
+            // Preload important pages
+            const pagesToPreload = ['/apartments/', '/booking/', '/about/'];
+            pagesToPreload.forEach(function(page) {
+                const link = document.createElement('link');
+                link.rel = 'prefetch';
+                link.href = kcl_ajax.home_url + page.substring(1);
+                document.head.appendChild(link);
+            });
+        },
+        
+        // Lazy loading for images
+        initLazyLoading: function() {
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                img.classList.add('loaded');
+                            }
+                            observer.unobserve(img);
+                        }
+                    });
+                }, {
+                    rootMargin: '100px 0px'
+                });
+                
+                document.querySelectorAll('img[data-src]').forEach(function(img) {
+                    imageObserver.observe(img);
+                });
+            }
         },
 
-        // Sticky Header
+        // Sticky Header with throttled scroll
         initHeader: function() {
             const $header = $('#kcl-header');
             let lastScroll = 0;
+            let ticking = false;
 
             $(window).on('scroll', function() {
-                const currentScroll = $(this).scrollTop();
-
-                if (currentScroll > 100) {
-                    $header.addClass('scrolled');
-                } else {
-                    $header.removeClass('scrolled');
+                const currentScroll = window.scrollY;
+                
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        if (currentScroll > 100) {
+                            $header.addClass('scrolled');
+                        } else {
+                            $header.removeClass('scrolled');
+                        }
+                        lastScroll = currentScroll;
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
-
-                lastScroll = currentScroll;
             });
         },
 
-        // Scroll to Top with Progress Animation
+        // Scroll to Top with Progress Animation - Optimized
         initScrollTop: function() {
             const $scrollTop = $('#kcl-scroll-top');
-            const $progressBar = $('.kcl-progress-bar');
-            const $progressFill = $('.kcl-progress-fill');
+            const progressBar = document.querySelector('.kcl-progress-bar');
+            const progressFill = document.querySelector('.kcl-progress-fill');
+            let ticking = false;
 
             $(window).on('scroll', function() {
-                const scrollTop = $(this).scrollTop();
-                const docHeight = $(document).height() - $(window).height();
-                const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        const scrollTop = window.scrollY;
+                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
 
-                // Show/hide button
-                if (scrollTop > 300) {
-                    $scrollTop.addClass('visible');
-                } else {
-                    $scrollTop.removeClass('visible');
+                        // Show/hide button
+                        if (scrollTop > 300) {
+                            $scrollTop.addClass('visible');
+                        } else {
+                            $scrollTop.removeClass('visible');
+                        }
+
+                        // Update progress bar
+                        const perimeter = 160;
+                        const dashOffset = perimeter - (scrollPercent / 100 * perimeter);
+                        if (progressBar) {
+                            progressBar.style.strokeDasharray = perimeter;
+                            progressBar.style.strokeDashoffset = dashOffset;
+                        }
+                        
+                        // Update fill effect
+                        if (progressFill) {
+                            progressFill.style.height = scrollPercent + '%';
+                        }
+                        
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
-
-                // Update progress bar (rect perimeter = 160)
-                const perimeter = 160;
-                const dashOffset = perimeter - (scrollPercent / 100 * perimeter);
-                $progressBar.css({
-                    'stroke-dasharray': perimeter,
-                    'stroke-dashoffset': dashOffset
-                });
-                
-                // Update fill effect
-                $progressFill.css('height', scrollPercent + '%');
             });
 
             $scrollTop.on('click', function() {
-                $('html, body').animate({ scrollTop: 0 }, 600, 'swing');
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         },
 
@@ -81,7 +145,9 @@
             const $hamburger = $('#kcl-hamburger');
             const $nav = $('#kcl-nav');
 
-            $hamburger.on('click', function() {
+            $hamburger.on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
                 $(this).toggleClass('active');
                 $nav.toggleClass('active');
             });
@@ -101,15 +167,23 @@
             });
         },
 
-        // Smooth Scroll
+        // Smooth Scroll - using native scroll for better performance
         initSmoothScroll: function() {
             $('a[href^="#"]').on('click', function(e) {
-                const target = $(this.getAttribute('href'));
-                if (target.length) {
-                    e.preventDefault();
-                    $('html, body').animate({
-                        scrollTop: target.offset().top - 80
-                    }, 600);
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        const headerOffset = 80;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
             });
         },
@@ -234,7 +308,7 @@
                                 html += '<div class="kcl-apartment-card kcl-glass-card">';
                                 html += '<div class="kcl-card-image">';
                                 if (apt.image) {
-                                    html += '<img src="' + apt.image + '" alt="' + apt.title + '">';
+                                    html += '<img src="' + apt.image + '" alt="' + apt.title + '" loading="lazy">';
                                 } else {
                                     html += '<div class="kcl-image-placeholder"><i class="fas fa-image"></i></div>';
                                 }
