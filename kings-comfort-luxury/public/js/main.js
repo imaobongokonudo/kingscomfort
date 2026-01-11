@@ -26,6 +26,7 @@
             this.initMobileNav();
             this.initMobileSectionIndicator();
             this.initSmoothScroll();
+            this.initSectionTransitions();
             this.initFormValidation();
             this.initQuickBookingForm();
             this.initProfileLookup();
@@ -250,6 +251,56 @@
                         });
                     }
                 }
+            });
+        },
+        
+        // Section Transitions - smooth fade and slide animations on scroll
+        initSectionTransitions: function() {
+            const sections = document.querySelectorAll('.kcl-section, .kcl-page-section, [data-section]');
+            const animatedElements = document.querySelectorAll('.kcl-glass-card, .kcl-card, .kcl-review-card, .kcl-service-card, .kcl-tier-card, .kcl-amenity-card, .kcl-mission-card, .kcl-team-member, .kcl-why-choose-card');
+            
+            if (!('IntersectionObserver' in window)) return;
+            
+            // Section observer - adds 'in-view' class for section transitions
+            const sectionObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('kcl-section-visible');
+                        // Stagger animate children
+                        const children = entry.target.querySelectorAll('.kcl-animate-child');
+                        children.forEach(function(child, index) {
+                            setTimeout(function() {
+                                child.classList.add('kcl-child-visible');
+                            }, index * 100);
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '-50px 0px'
+            });
+            
+            sections.forEach(function(section) {
+                section.classList.add('kcl-section-transition');
+                sectionObserver.observe(section);
+            });
+            
+            // Card/element observer for subtle entrance animations
+            const elementObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('kcl-element-visible');
+                        elementObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '-30px 0px'
+            });
+            
+            animatedElements.forEach(function(el) {
+                el.classList.add('kcl-element-transition');
+                elementObserver.observe(el);
             });
         },
 

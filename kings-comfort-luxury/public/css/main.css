@@ -39,6 +39,17 @@ body {
     color: var(--kcl-text);
     line-height: 1.6;
     overflow-x: hidden;
+    max-width: 100vw;
+}
+
+/* Prevent horizontal overflow globally */
+*, *::before, *::after {
+    max-width: 100%;
+}
+
+main, article, section, div {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 /* Container */
@@ -46,6 +57,8 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Gold Text */
@@ -390,8 +403,9 @@ i[class*="fa-"] {
 /* Apartments Grid */
 .kcl-apartments-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
     gap: 30px;
+    width: 100%;
 }
 
 .kcl-apartment-card {
@@ -502,8 +516,9 @@ i[class*="fa-"] {
 /* Reviews */
 .kcl-reviews-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
     gap: 30px;
+    width: 100%;
 }
 
 .kcl-review-card {
@@ -530,8 +545,9 @@ i[class*="fa-"] {
 /* Services Grid */
 .kcl-services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
     gap: 30px;
+    width: 100%;
 }
 
 .kcl-service-card {
@@ -1113,8 +1129,9 @@ i[class*="fa-"] {
 /* Concierge Page */
 .kcl-concierge-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
     gap: 30px;
+    width: 100%;
 }
 
 .kcl-concierge-card {
@@ -1432,6 +1449,8 @@ i[class*="fa-"] {
     padding: 50px;
     margin-bottom: 60px;
     align-items: center;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .kcl-about-hero-content h2 {
@@ -1457,10 +1476,12 @@ i[class*="fa-"] {
 
 .kcl-about-story {
     display: grid;
-    grid-template-columns: 400px 1fr;
+    grid-template-columns: minmax(200px, 400px) 1fr;
     gap: 50px;
     padding: 40px;
     align-items: center;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .kcl-about-story-image .kcl-image-placeholder {
@@ -1614,14 +1635,17 @@ i[class*="fa-"] {
     .kcl-about-hero {
         grid-template-columns: 1fr;
         text-align: center;
+        padding: 30px 15px;
     }
     
     .kcl-about-story {
         grid-template-columns: 1fr;
+        padding: 20px 15px;
     }
     
     .kcl-about-mission {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
     
     .kcl-why-choose-grid {
@@ -1636,11 +1660,26 @@ i[class*="fa-"] {
 @media (max-width: 768px) {
     .kcl-why-choose-grid {
         grid-template-columns: 1fr;
+        padding: 0 10px;
     }
     
     .kcl-about-cta-btns {
         flex-direction: column;
         align-items: center;
+        padding: 0 15px;
+    }
+    
+    .kcl-about-page {
+        padding: 0 10px 60px;
+    }
+    
+    .kcl-about-cta {
+        padding: 30px 20px;
+        margin: 0 10px;
+    }
+    
+    .kcl-mission-card {
+        padding: 30px 20px;
     }
 }
 
@@ -1685,6 +1724,7 @@ i[class*="fa-"] {
 /* About Section on Homepage */
 .kcl-about-home-section {
     background: linear-gradient(180deg, var(--kcl-background) 0%, var(--kcl-background-light) 100%);
+    overflow: hidden;
 }
 
 .kcl-about-home-grid {
@@ -1692,6 +1732,8 @@ i[class*="fa-"] {
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .kcl-about-home-content .kcl-section-title {
@@ -1745,9 +1787,17 @@ i[class*="fa-"] {
     
     .kcl-about-home-content {
         text-align: center;
+        padding: 0 15px;
     }
     
     .kcl-about-placeholder {
         height: 300px;
+        margin: 0 15px;
+    }
+    
+    .kcl-about-home-image {
+        width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
     }
 }

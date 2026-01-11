@@ -32,6 +32,27 @@
 
 /* Mobile */
 @media (max-width: 768px) {
+    /* Prevent horizontal overflow */
+    html, body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    
+    .kcl-container {
+        padding: 0 15px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .kcl-section {
+        padding: 60px 15px;
+        background-color: var(--kcl-background);
+        overflow: hidden;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
     .kcl-nav {
         position: fixed;
         top: 80px;
@@ -88,6 +109,8 @@
     .kcl-glass-card {
         background: rgba(20, 20, 32, 0.95);
         border: 1px solid rgba(255, 255, 255, 0.15);
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .kcl-card-content h3,
@@ -96,11 +119,6 @@
     .kcl-tier-card h3,
     .kcl-concierge-card h3 {
         color: var(--kcl-text);
-    }
-    
-    .kcl-section {
-        padding: 60px 15px;
-        background-color: var(--kcl-background);
     }
     
     .kcl-page-section {
