@@ -139,8 +139,8 @@
                 const checkOut = $('#quick_check_out').val();
                 const guests = $('#quick_guests').val();
 
-                window.location.href = kcl_ajax.plugin_url.replace('/kings-comfort-luxury/', '') + 
-                    '/booking/?check_in=' + checkIn + '&check_out=' + checkOut + '&guests=' + guests;
+                window.location.href = kcl_ajax.booking_url + 
+                    '?check_in=' + checkIn + '&check_out=' + checkOut + '&guests=' + guests;
             });
         },
 
@@ -240,7 +240,7 @@
                                 html += '</div>';
                                 html += '<div class="kcl-card-footer">';
                                 html += '<div class="kcl-card-price">₦' + parseInt(apt.price || 150000).toLocaleString() + '<small>/night</small></div>';
-                                html += '<a href="' + kcl_ajax.plugin_url.replace('/kings-comfort-luxury/', '') + '/booking/?apartment=' + apt.id + '" class="kcl-btn kcl-btn-primary">Book Now</a>';
+                                html += '<a href="' + kcl_ajax.booking_url + '?apartment=' + apt.id + '" class="kcl-btn kcl-btn-primary">Book Now</a>';
                                 html += '</div></div></div>';
                             });
                             $('#kcl-apartments-list').html(html);

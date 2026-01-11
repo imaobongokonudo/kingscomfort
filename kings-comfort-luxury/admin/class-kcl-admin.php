@@ -281,7 +281,12 @@ class KCL_Admin {
         }
         
         $status_filter = isset($_GET['status']) ? sanitize_text_field(wp_unslash($_GET['status'])) : '';
-        $where = $status_filter ? $wpdb->prepare(" WHERE booking_status = %s", $status_filter) : '';
+        // Validate status filter against allowed values
+        $allowed_statuses = array('pending', 'confirmed', 'cancelled', 'completed');
+        $where = '';
+        if ($status_filter && in_array($status_filter, $allowed_statuses, true)) {
+            $where = $wpdb->prepare(" WHERE booking_status = %s", $status_filter);
+        }
         
         $bookings = $wpdb->get_results(
             "SELECT b.*, p.post_title as apartment_name 

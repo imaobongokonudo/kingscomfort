@@ -166,7 +166,8 @@ class KCL_Booking {
         if (!$booking) return;
         
         $points_per_naira = get_option('kcl_loyalty_points_per_naira', 1);
-        $points_earned = floor($booking->total_amount * $points_per_naira / 100);
+        // Points earned: 1 point per 100 Naira spent (adjustable via settings)
+        $points_earned = floor($booking->total_amount / 100) * $points_per_naira;
         
         $existing = $wpdb->get_row($wpdb->prepare(
             "SELECT * FROM $loyalty_table WHERE guest_email = %s",

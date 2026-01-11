@@ -117,6 +117,8 @@ class Kings_Comfort_Luxury {
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('kcl_nonce'),
             'plugin_url' => KCL_PLUGIN_URL,
+            'home_url' => home_url('/'),
+            'booking_url' => home_url('/booking/'),
             'whatsapp_number' => KCL_WHATSAPP_NUMBER,
             'primary_color' => KCL_PRIMARY_COLOR,
             'background_color' => KCL_BACKGROUND_COLOR,
