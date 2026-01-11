@@ -104,8 +104,8 @@ class Kings_Comfort_Luxury {
         // Google Fonts - Elegant luxury fonts
         wp_enqueue_style('kcl-google-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap', array(), null);
         
-        // Font Awesome for icons
-        wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), '6.4.0');
+        // Font Awesome for icons - using multiple CDN sources for reliability
+        wp_enqueue_style('font-awesome-cdn', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css', array(), '6.5.1');
         
         // Main scripts
         wp_enqueue_script('kcl-main-scripts', KCL_PLUGIN_URL . 'public/js/main.js', array('jquery'), KCL_VERSION, true);

@@ -57,6 +57,27 @@ body {
     background-clip: text;
 }
 
+/* Icon Styles - Ensure Icons Display */
+.fas, .fab, .far, .fa {
+    font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Brands', 'FontAwesome' !important;
+    font-style: normal;
+    font-weight: 900;
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.fab {
+    font-family: 'Font Awesome 6 Brands' !important;
+    font-weight: 400;
+}
+
+i[class*="fa-"] {
+    min-width: 1em;
+    text-align: center;
+}
+
 /* Glass Morphism Card */
 .kcl-glass-card {
     background: var(--kcl-glass);
@@ -79,10 +100,10 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 14px 32px;
+    gap: 6px;
+    padding: 10px 22px;
     font-family: var(--kcl-font-body);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     text-decoration: none;
     border-radius: 50px;
@@ -153,24 +174,29 @@ body {
 
 .kcl-nav {
     display: flex;
-    gap: 40px;
+    gap: 30px;
 }
 
 .kcl-nav-link {
     color: var(--kcl-text);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: var(--kcl-transition);
     position: relative;
+    background: linear-gradient(90deg, var(--kcl-text) 0%, var(--kcl-primary) 50%, var(--kcl-text) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: sparkle-text 4s ease-in-out infinite;
 }
 
 .kcl-nav-link::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -4px;
     left: 0;
     width: 0;
     height: 2px;
@@ -183,8 +209,15 @@ body {
     width: 100%;
 }
 
+@keyframes sparkle-text {
+    0%, 100% { background-position: 0% 50%; -webkit-text-fill-color: currentColor; }
+    50% { background-position: 100% 50%; -webkit-text-fill-color: transparent; }
+}
+
 .kcl-nav-link:hover {
     color: var(--kcl-primary);
+    -webkit-text-fill-color: var(--kcl-primary);
+    text-shadow: 0 0 10px rgba(226, 195, 105, 0.5);
 }
 
 .kcl-hamburger {
@@ -229,16 +262,16 @@ body {
 
 .kcl-hero h1 {
     font-family: var(--kcl-font-heading);
-    font-size: clamp(40px, 6vw, 72px);
+    font-size: clamp(32px, 5vw, 56px);
     font-weight: 700;
     line-height: 1.1;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 .kcl-hero p {
-    font-size: 18px;
+    font-size: 15px;
     color: var(--kcl-text-muted);
-    margin-bottom: 40px;
+    margin-bottom: 35px;
 }
 
 .kcl-hero-btns {
@@ -288,7 +321,7 @@ body {
 }
 
 .kcl-marquee-track span {
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--kcl-text-muted);
     text-transform: uppercase;
@@ -308,16 +341,16 @@ body {
 
 .kcl-section-title {
     font-family: var(--kcl-font-heading);
-    font-size: clamp(32px, 4vw, 48px);
+    font-size: clamp(26px, 3.5vw, 40px);
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .kcl-section-subtitle {
     text-align: center;
     color: var(--kcl-text-muted);
-    font-size: 16px;
-    margin-bottom: 60px;
+    font-size: 14px;
+    margin-bottom: 50px;
 }
 
 .kcl-section-cta {
@@ -358,16 +391,16 @@ body {
 
 .kcl-card-content h3 {
     font-family: var(--kcl-font-heading);
-    font-size: 22px;
-    margin-bottom: 10px;
+    font-size: 18px;
+    margin-bottom: 8px;
 }
 
 .kcl-card-meta {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     color: var(--kcl-text-muted);
-    font-size: 14px;
-    margin-bottom: 15px;
+    font-size: 12px;
+    margin-bottom: 12px;
 }
 
 .kcl-card-meta i {
@@ -392,13 +425,13 @@ body {
 
 .kcl-card-price {
     font-family: var(--kcl-font-heading);
-    font-size: 28px;
+    font-size: 22px;
     color: var(--kcl-primary);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .kcl-card-price small {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--kcl-text-muted);
     font-family: var(--kcl-font-body);
 }
@@ -427,12 +460,13 @@ body {
 }
 
 .kcl-amenity-item i {
-    font-size: 36px;
+    font-size: 28px;
     color: var(--kcl-primary);
+    display: inline-block;
 }
 
 .kcl-amenity-item span {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
 }
 
@@ -477,20 +511,21 @@ body {
 }
 
 .kcl-service-card i {
-    font-size: 48px;
+    font-size: 36px;
     color: var(--kcl-primary);
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+    display: inline-block;
 }
 
 .kcl-service-card h3 {
     font-family: var(--kcl-font-heading);
-    font-size: 22px;
-    margin-bottom: 15px;
+    font-size: 18px;
+    margin-bottom: 12px;
 }
 
 .kcl-service-card p {
     color: var(--kcl-text-muted);
-    font-size: 14px;
+    font-size: 13px;
 }
 
 /* Loyalty Tiers */
@@ -571,8 +606,8 @@ body {
 
 .kcl-form-group label {
     display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
+    margin-bottom: 6px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--kcl-text-muted);
 }
@@ -581,13 +616,13 @@ body {
 .kcl-form-group select,
 .kcl-form-group textarea {
     width: 100%;
-    padding: 14px 18px;
+    padding: 12px 14px;
     background: var(--kcl-background-light);
     border: 1px solid var(--kcl-glass-border);
     border-radius: var(--kcl-radius-sm);
     color: var(--kcl-text);
     font-family: var(--kcl-font-body);
-    font-size: 14px;
+    font-size: 13px;
     transition: var(--kcl-transition);
 }
 
@@ -615,15 +650,16 @@ body {
 
 .kcl-form-section h3 {
     font-family: var(--kcl-font-heading);
-    font-size: 20px;
-    margin-bottom: 20px;
+    font-size: 16px;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .kcl-form-section h3 i {
     color: var(--kcl-primary);
+    display: inline-block;
 }
 
 .kcl-form-row {
@@ -674,36 +710,42 @@ body {
 /* Footer */
 .kcl-footer {
     background: var(--kcl-background-light);
-    padding: 80px 20px 30px;
+    padding: 60px 20px 25px;
     border-top: 1px solid var(--kcl-glass-border);
 }
 
 .kcl-footer-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    margin-bottom: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
 }
 
 .kcl-footer-col h4 {
     font-family: var(--kcl-font-heading);
-    font-size: 18px;
+    font-size: 15px;
     color: var(--kcl-primary);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .kcl-footer-col p {
     color: var(--kcl-text-muted);
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.kcl-footer-col p i {
+    display: inline-block;
+    margin-right: 6px;
+    color: var(--kcl-primary);
 }
 
 .kcl-footer-col a {
     display: block;
     color: var(--kcl-text-muted);
     text-decoration: none;
-    font-size: 14px;
-    padding: 8px 0;
+    font-size: 12px;
+    padding: 6px 0;
     transition: var(--kcl-transition);
 }
 
@@ -713,18 +755,18 @@ body {
 }
 
 .kcl-footer-logo {
-    height: 60px;
-    margin-bottom: 20px;
+    height: 50px;
+    margin-bottom: 16px;
 }
 
 .kcl-social-links {
     display: flex;
-    gap: 15px;
+    gap: 12px;
 }
 
 .kcl-social-links a {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -732,6 +774,12 @@ body {
     border-radius: 50%;
     color: var(--kcl-text);
     transition: var(--kcl-transition);
+    padding: 0;
+}
+
+.kcl-social-links a i {
+    display: inline-block;
+    font-size: 14px;
 }
 
 .kcl-social-links a:hover {
@@ -742,10 +790,10 @@ body {
 
 .kcl-footer-bottom {
     text-align: center;
-    padding-top: 30px;
+    padding-top: 25px;
     border-top: 1px solid var(--kcl-glass-border);
     color: var(--kcl-text-subtle);
-    font-size: 14px;
+    font-size: 12px;
 }
 
 /* Scroll to Top */
