@@ -1,0 +1,248 @@
+/**
+ * Kings Comfort Luxury - Admin Styles
+ */
+
+:root {
+    --kcl-primary: #E2C369;
+    --kcl-dark: #0A0A14;
+}
+
+/* Dashboard Wrap */
+.kcl-admin-wrap {
+    margin: 20px 20px 20px 0;
+}
+
+.kcl-admin-wrap h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    color: #1d2327;
+}
+
+/* Dashboard Stats */
+.kcl-dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.kcl-stat-card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.kcl-stat-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.kcl-stat-icon {
+    width: 50px;
+    height: 50px;
+    background: #f0f0f1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kcl-stat-icon .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: var(--kcl-primary);
+}
+
+.kcl-stat-icon.pending { background: #fff3cd; }
+.kcl-stat-icon.pending .dashicons { color: #856404; }
+
+.kcl-stat-icon.success { background: #d4edda; }
+.kcl-stat-icon.success .dashicons { color: #155724; }
+
+.kcl-stat-icon.revenue { background: #e2f0e2; }
+.kcl-stat-icon.revenue .dashicons { color: #28a745; }
+
+.kcl-stat-content h3 {
+    margin: 0 0 5px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.kcl-stat-content p {
+    margin: 0;
+    color: #646970;
+    font-size: 13px;
+}
+
+/* Dashboard Grid */
+.kcl-dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+@media (max-width: 1200px) {
+    .kcl-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.kcl-dashboard-card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.kcl-dashboard-card h2 {
+    margin: 0 0 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 16px;
+    color: #1d2327;
+}
+
+/* Quick Actions */
+.kcl-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.kcl-quick-actions .button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.kcl-quick-actions .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* Status Badges */
+.kcl-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.kcl-status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.kcl-status-confirmed,
+.kcl-status-completed,
+.kcl-status-approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.kcl-status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Tier Badges */
+.kcl-tier {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.kcl-tier-bronze {
+    background: linear-gradient(135deg, #CD7F32, #8B4513);
+    color: white;
+}
+
+.kcl-tier-silver {
+    background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+    color: #333;
+}
+
+.kcl-tier-gold {
+    background: linear-gradient(135deg, #E2C369, #D4AF37);
+    color: #333;
+}
+
+.kcl-tier-platinum {
+    background: linear-gradient(135deg, #E5E4E2, #BFC1C2);
+    color: #333;
+}
+
+/* Filter Bar */
+.kcl-filter-bar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Settings Form */
+.kcl-settings-form {
+    max-width: 800px;
+}
+
+.kcl-settings-section {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.kcl-settings-section h2 {
+    margin: 0 0 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 16px;
+    color: #1d2327;
+}
+
+/* Table Improvements */
+.kcl-admin-wrap .wp-list-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.kcl-admin-wrap .wp-list-table th {
+    background: #f6f7f7;
+    font-weight: 600;
+}
+
+.kcl-admin-wrap .wp-list-table td {
+    vertical-align: middle;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+    .kcl-dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .kcl-stat-card {
+        padding: 15px;
+    }
+
+    .kcl-stat-content h3 {
+        font-size: 22px;
+    }
+}

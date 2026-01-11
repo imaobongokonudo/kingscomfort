@@ -1,0 +1,96 @@
+/**
+ * Kings Comfort Luxury - Admin JavaScript
+ */
+
+(function($) {
+    'use strict';
+
+    $(document).ready(function() {
+        KCLAdmin.init();
+    });
+
+    const KCLAdmin = {
+        init: function() {
+            this.initMediaUploader();
+            this.initConfirmations();
+            this.initTabs();
+        },
+
+        // Media Uploader for Gallery
+        initMediaUploader: function() {
+            let mediaUploader;
+
+            $('.kcl-upload-gallery').on('click', function(e) {
+                e.preventDefault();
+
+                const $button = $(this);
+                const $container = $button.siblings('.kcl-gallery-container');
+                const $input = $button.siblings('input[type="hidden"]');
+
+                if (mediaUploader) {
+                    mediaUploader.open();
+                    return;
+                }
+
+                mediaUploader = wp.media({
+                    title: 'Select Gallery Images',
+                    button: {
+                        text: 'Add to Gallery'
+                    },
+                    multiple: true
+                });
+
+                mediaUploader.on('select', function() {
+                    const attachments = mediaUploader.state().get('selection').map(function(attachment) {
+                        attachment = attachment.toJSON();
+                        return attachment.id;
+                    });
+
+                    $input.val(attachments.join(','));
+
+                    // Update preview
+                    let previewHtml = '';
+                    mediaUploader.state().get('selection').each(function(attachment) {
+                        attachment = attachment.toJSON();
+                        previewHtml += '<img src="' + attachment.sizes.thumbnail.url + '" style="width:60px;height:60px;object-fit:cover;margin:5px;border-radius:5px;">';
+                    });
+                    $container.html(previewHtml);
+                });
+
+                mediaUploader.open();
+            });
+        },
+
+        // Confirmation Dialogs
+        initConfirmations: function() {
+            $('a[href*="action=delete"]').on('click', function(e) {
+                if (!confirm('Are you sure you want to delete this item?')) {
+                    e.preventDefault();
+                }
+            });
+
+            $('a[href*="action=cancel"]').on('click', function(e) {
+                if (!confirm('Are you sure you want to cancel this booking?')) {
+                    e.preventDefault();
+                }
+            });
+        },
+
+        // Settings Tabs
+        initTabs: function() {
+            $('.kcl-admin-tabs a').on('click', function(e) {
+                e.preventDefault();
+                const target = $(this).attr('href');
+
+                $('.kcl-admin-tabs a').removeClass('nav-tab-active');
+                $(this).addClass('nav-tab-active');
+
+                $('.kcl-admin-tab-content').hide();
+                $(target).show();
+            });
+        }
+    };
+
+    window.KCLAdmin = KCLAdmin;
+
+})(jQuery);
