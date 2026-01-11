@@ -180,13 +180,17 @@ class Kings_Comfort_Luxury {
                     <i class="fas fa-home"></i>
                     <span><?php esc_html_e('Home', 'kings-comfort-luxury'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('apartments') ? 'active' : ''; ?>">
-                    <i class="fas fa-building"></i>
-                    <span><?php esc_html_e('Apartments', 'kings-comfort-luxury'); ?></span>
+                <a href="<?php echo esc_url(home_url('/about/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('about') ? 'active' : ''; ?>">
+                    <i class="fas fa-info-circle"></i>
+                    <span><?php esc_html_e('About', 'kings-comfort-luxury'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/booking/')); ?>" class="kcl-mobile-nav-item kcl-mobile-nav-book <?php echo is_page('booking') ? 'active' : ''; ?>">
                     <i class="fas fa-calendar-check"></i>
                     <span><?php esc_html_e('Book', 'kings-comfort-luxury'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('apartments') ? 'active' : ''; ?>">
+                    <i class="fas fa-building"></i>
+                    <span><?php esc_html_e('Apartments', 'kings-comfort-luxury'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/profile/')); ?>" class="kcl-mobile-nav-item <?php echo is_page('profile') ? 'active' : ''; ?>">
                     <i class="fas fa-user"></i>
@@ -194,6 +198,11 @@ class Kings_Comfort_Luxury {
                 </a>
             </div>
         </nav>
+        
+        <!-- Mobile Section Indicator -->
+        <div class="kcl-mobile-section-indicator" id="kcl-mobile-section-indicator">
+            <span class="kcl-current-section-name"></span>
+        </div>
         <?php
     }
     
@@ -210,9 +219,9 @@ class Kings_Comfort_Luxury {
                 </a>
                 <nav class="kcl-nav" id="kcl-nav">
                     <a href="<?php echo esc_url(home_url('/')); ?>" class="kcl-nav-link<?php echo is_front_page() ? ' active' : ''; ?>">Home</a>
+                    <a href="<?php echo esc_url(home_url('/about/')); ?>" class="kcl-nav-link<?php echo is_page('about') ? ' active' : ''; ?>">About</a>
                     <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-nav-link<?php echo is_page('apartments') ? ' active' : ''; ?>">Apartments</a>
                     <a href="<?php echo esc_url(home_url('/amenities/')); ?>" class="kcl-nav-link<?php echo is_page('amenities') ? ' active' : ''; ?>">Amenities</a>
-                    <a href="<?php echo esc_url(home_url('/about/')); ?>" class="kcl-nav-link<?php echo is_page('about') ? ' active' : ''; ?>">About</a>
                     <a href="<?php echo esc_url(home_url('/concierge/')); ?>" class="kcl-nav-link<?php echo is_page('concierge') ? ' active' : ''; ?>">Concierge</a>
                     <a href="<?php echo esc_url(home_url('/loyalty/')); ?>" class="kcl-nav-link<?php echo is_page('loyalty') ? ' active' : ''; ?>">Loyalty</a>
                 </nav>
@@ -240,9 +249,9 @@ class Kings_Comfort_Luxury {
                     </div>
                     <div class="kcl-footer-col">
                         <h4><?php esc_html_e('Quick Links', 'kings-comfort-luxury'); ?></h4>
+                        <a href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Us', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/apartments/')); ?>"><?php esc_html_e('Apartments', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/amenities/')); ?>"><?php esc_html_e('Amenities', 'kings-comfort-luxury'); ?></a>
-                        <a href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Us', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/booking/')); ?>"><?php esc_html_e('Book Now', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/concierge/')); ?>"><?php esc_html_e('Concierge', 'kings-comfort-luxury'); ?></a>
                         <a href="<?php echo esc_url(home_url('/loyalty/')); ?>"><?php esc_html_e('Loyalty Program', 'kings-comfort-luxury'); ?></a>

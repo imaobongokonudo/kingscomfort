@@ -210,14 +210,35 @@ class KCL_Shortcodes {
                 <h2 class="kcl-section-title kcl-animate-fade-up">World-Class <span class="kcl-gold">Amenities</span></h2>
                 <p class="kcl-section-subtitle kcl-animate-fade-up">Everything you need for a luxurious stay</p>
                 <div class="kcl-amenities-grid">
-                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-wifi"></i><span>High-Speed WiFi</span></div>
-                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-swimming-pool"></i><span>Swimming Pool</span></div>
-                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-dumbbell"></i><span>Fitness Center</span></div>
-                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-parking"></i><span>Free Parking</span></div>
-                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-concierge-bell"></i><span>24/7 Concierge</span></div>
-                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-utensils"></i><span>Fine Dining</span></div>
-                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-spa"></i><span>Spa & Wellness</span></div>
-                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-shield-alt"></i><span>24/7 Security</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-th-large"></i><span>Spacious & Versatile Layout with 4 Rooms</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-swimming-pool"></i><span>Private Swimming Pool</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-volume-up"></i><span>Integrated Ceiling Speakers</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-bolt"></i><span>24/7 Uninterrupted Power Supply</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-wifi"></i><span>Constant High Speed Internet</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-couch"></i><span>Premium Imported Furnishings</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-shield-alt"></i><span>Serene & Secure Environment</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-map-marker-alt"></i><span>Proximity & Convenience</span></div>
+                    <div class="kcl-amenity-item kcl-glass-card kcl-animate-fade-up"><i class="fas fa-headset"></i><span>Comprehensive Support Services</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="kcl-section kcl-about-home-section" data-section="about">
+            <div class="kcl-container">
+                <div class="kcl-about-home-grid">
+                    <div class="kcl-about-home-content kcl-animate-fade-up">
+                        <h2 class="kcl-section-title">About <span class="kcl-gold">Kings Comfort</span></h2>
+                        <p class="kcl-about-home-text">Kings Comfort Luxury is Abuja's premier service apartment destination, offering an unparalleled blend of comfort, elegance, and personalized hospitality. Nestled in the serene Kabusa area, we provide discerning guests with a home away from home experience.</p>
+                        <p class="kcl-about-home-text">Our commitment to excellence extends to every detail - from our meticulously designed interiors to our round-the-clock concierge service. Experience the perfect fusion of luxury living and Nigerian warmth.</p>
+                        <a href="<?php echo esc_url(home_url('/about/')); ?>" class="kcl-btn kcl-btn-primary">Learn More About Us</a>
+                    </div>
+                    <div class="kcl-about-home-image kcl-animate-fade-up">
+                        <div class="kcl-image-placeholder kcl-about-placeholder">
+                            <i class="fas fa-building"></i>
+                            <span>About Kings Comfort</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

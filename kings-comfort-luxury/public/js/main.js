@@ -24,6 +24,7 @@
             this.initHeader();
             this.initScrollTop();
             this.initMobileNav();
+            this.initMobileSectionIndicator();
             this.initSmoothScroll();
             this.initFormValidation();
             this.initQuickBookingForm();
@@ -163,6 +164,70 @@
                 if (!$(e.target).closest('.kcl-header').length) {
                     $hamburger.removeClass('active');
                     $nav.removeClass('active');
+                }
+            });
+        },
+
+        // Mobile Section Indicator
+        initMobileSectionIndicator: function() {
+            const $indicator = $('#kcl-mobile-section-indicator');
+            const $sectionName = $indicator.find('.kcl-current-section-name');
+            const sections = document.querySelectorAll('[data-section]');
+            let currentSection = '';
+            let hideTimeout = null;
+            let ticking = false;
+            
+            if ($indicator.length === 0 || sections.length === 0) return;
+            
+            const sectionNames = {
+                'hero': 'Welcome',
+                'apartments': 'Apartments',
+                'amenities': 'Amenities',
+                'about': 'About Us',
+                'booking': 'Booking',
+                'reviews': 'Reviews',
+                'location': 'Location',
+                'concierge': 'Concierge',
+                'loyalty': 'Loyalty'
+            };
+            
+            $(window).on('scroll', function() {
+                if (!ticking) {
+                    window.requestAnimationFrame(function() {
+                        const scrollTop = window.scrollY;
+                        const windowHeight = window.innerHeight;
+                        
+                        sections.forEach(function(section) {
+                            const rect = section.getBoundingClientRect();
+                            const sectionTop = rect.top + scrollTop;
+                            const sectionId = section.getAttribute('data-section');
+                            
+                            // Check if section is in viewport
+                            if (scrollTop >= sectionTop - windowHeight / 2 && 
+                                scrollTop < sectionTop + section.offsetHeight - windowHeight / 2) {
+                                
+                                if (currentSection !== sectionId) {
+                                    currentSection = sectionId;
+                                    const displayName = sectionNames[sectionId] || sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+                                    $sectionName.text(displayName);
+                                    $indicator.addClass('visible');
+                                    
+                                    // Clear existing timeout
+                                    if (hideTimeout) {
+                                        clearTimeout(hideTimeout);
+                                    }
+                                    
+                                    // Hide after 2 seconds
+                                    hideTimeout = setTimeout(function() {
+                                        $indicator.removeClass('visible');
+                                    }, 2000);
+                                }
+                            }
+                        });
+                        
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
             });
         },
