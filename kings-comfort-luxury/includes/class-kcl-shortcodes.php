@@ -226,7 +226,7 @@ class KCL_Shortcodes {
         <!-- About Section -->
         <section class="kcl-section kcl-about-home-section" data-section="about">
             <div class="kcl-container kcl-about-home-container">
-                <h2 class="kcl-section-title kcl-section-title-sparkle kcl-animate-fade-up">About <span class="kcl-gold">Kings Comfort</span></h2>
+                <h2 class="kcl-section-title kcl-animate-fade-up">About <span class="kcl-gold">Kings Comfort</span></h2>
                 <div class="kcl-about-home-image-wrapper kcl-animate-fade-up">
                     <div class="kcl-image-placeholder kcl-about-placeholder">
                         <i class="fas fa-building"></i>
