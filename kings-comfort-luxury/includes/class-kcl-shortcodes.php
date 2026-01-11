@@ -225,20 +225,18 @@ class KCL_Shortcodes {
 
         <!-- About Section -->
         <section class="kcl-section kcl-about-home-section" data-section="about">
-            <div class="kcl-container">
-                <div class="kcl-about-home-grid">
-                    <div class="kcl-about-home-content kcl-animate-fade-up">
-                        <h2 class="kcl-section-title">About <span class="kcl-gold">Kings Comfort</span></h2>
-                        <p class="kcl-about-home-text">Kings Comfort Luxury is Abuja's premier service apartment destination, offering an unparalleled blend of comfort, elegance, and personalized hospitality. Nestled in the serene Kabusa area, we provide discerning guests with a home away from home experience.</p>
-                        <p class="kcl-about-home-text">Our commitment to excellence extends to every detail - from our meticulously designed interiors to our round-the-clock concierge service. Experience the perfect fusion of luxury living and Nigerian warmth.</p>
-                        <a href="<?php echo esc_url(home_url('/about/')); ?>" class="kcl-btn kcl-btn-primary">Learn More About Us</a>
+            <div class="kcl-container kcl-about-home-container">
+                <h2 class="kcl-section-title kcl-animate-fade-up">About <span class="kcl-gold">Kings Comfort</span></h2>
+                <div class="kcl-about-home-image-wrapper kcl-animate-fade-up">
+                    <div class="kcl-image-placeholder kcl-about-placeholder">
+                        <i class="fas fa-building"></i>
+                        <span>About Kings Comfort</span>
                     </div>
-                    <div class="kcl-about-home-image kcl-animate-fade-up">
-                        <div class="kcl-image-placeholder kcl-about-placeholder">
-                            <i class="fas fa-building"></i>
-                            <span>About Kings Comfort</span>
-                        </div>
-                    </div>
+                </div>
+                <div class="kcl-about-home-content kcl-animate-fade-up">
+                    <p class="kcl-about-home-text">Kings Comfort Luxury is Abuja's premier service apartment destination, offering an unparalleled blend of comfort, elegance, and personalized hospitality. Nestled in the serene Kabusa area, we provide discerning guests with a home away from home experience.</p>
+                    <p class="kcl-about-home-text">Our commitment to excellence extends to every detail - from our meticulously designed interiors to our round-the-clock concierge service. Experience the perfect fusion of luxury living and Nigerian warmth.</p>
+                    <a href="<?php echo esc_url(home_url('/about/')); ?>" class="kcl-btn kcl-btn-primary">Learn More About Us</a>
                 </div>
             </div>
         </section>

@@ -1445,6 +1445,10 @@ i[class*="fa-"] {
     max-width: 100vw;
 }
 
+.kcl-about-page .kcl-container {
+    max-width: 1100px;
+}
+
 .kcl-about-hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1473,10 +1477,14 @@ i[class*="fa-"] {
 .kcl-about-hero-image {
     width: 100%;
     max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .kcl-about-hero-image .kcl-image-placeholder {
     height: 300px;
+    width: 100%;
     max-width: 100%;
 }
 
@@ -1488,7 +1496,7 @@ i[class*="fa-"] {
 
 .kcl-about-story {
     display: grid;
-    grid-template-columns: minmax(200px, 400px) 1fr;
+    grid-template-columns: 350px 1fr;
     gap: 50px;
     padding: 40px;
     align-items: center;
@@ -1500,10 +1508,14 @@ i[class*="fa-"] {
 .kcl-about-story-image {
     width: 100%;
     max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .kcl-about-story-image .kcl-image-placeholder {
     height: 280px;
+    width: 100%;
     max-width: 100%;
 }
 
@@ -1654,12 +1666,14 @@ i[class*="fa-"] {
     .kcl-about-hero {
         grid-template-columns: 1fr;
         text-align: center;
-        padding: 30px 15px;
+        padding: 30px 20px;
         gap: 30px;
     }
     
     .kcl-about-hero-image {
         order: -1;
+        display: flex;
+        justify-content: center;
     }
     
     .kcl-about-hero-content {
@@ -1668,17 +1682,21 @@ i[class*="fa-"] {
     
     .kcl-about-hero-image .kcl-image-placeholder {
         height: 220px;
-        max-width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
     }
     
     .kcl-about-story {
         grid-template-columns: 1fr;
-        padding: 20px 15px;
+        padding: 25px 20px;
         gap: 25px;
+        text-align: center;
     }
     
     .kcl-about-story-image {
         order: -1;
+        display: flex;
+        justify-content: center;
     }
     
     .kcl-about-story-content {
@@ -1687,73 +1705,94 @@ i[class*="fa-"] {
     
     .kcl-about-story-image .kcl-image-placeholder {
         height: 200px;
-        max-width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
     }
     
     .kcl-about-mission {
         grid-template-columns: 1fr;
         gap: 20px;
-        padding: 0 10px;
+        padding: 0 15px;
     }
     
     .kcl-why-choose-grid {
         grid-template-columns: repeat(2, 1fr);
-        padding: 0 10px;
+        padding: 0 15px;
         gap: 15px;
     }
     
     .kcl-team-grid {
         grid-template-columns: 1fr;
-        padding: 0 10px;
+        padding: 0 15px;
     }
     
     .kcl-about-section {
-        padding: 0 10px;
+        padding: 0 15px;
         margin-bottom: 40px;
+    }
+    
+    .kcl-about-page .kcl-container {
+        padding: 0 15px;
     }
 }
 
 @media (max-width: 768px) {
     .kcl-why-choose-grid {
         grid-template-columns: 1fr;
-        padding: 0 10px;
+        padding: 0 15px;
         gap: 15px;
     }
     
     .kcl-why-card {
-        padding: 25px 15px;
+        padding: 25px 20px;
     }
     
     .kcl-about-cta-btns {
         flex-direction: column;
         align-items: center;
-        padding: 0 15px;
+        padding: 0 20px;
     }
     
     .kcl-about-page {
-        padding: 0 10px 60px;
+        padding: 0 0 60px 0;
         overflow-x: hidden;
     }
     
+    .kcl-about-page .kcl-container {
+        padding: 0 20px;
+    }
+    
     .kcl-about-cta {
-        padding: 30px 20px;
-        margin: 0 10px;
+        padding: 30px 25px;
+        margin: 0 15px;
     }
     
     .kcl-mission-card {
-        padding: 25px 15px;
+        padding: 25px 20px;
     }
     
     .kcl-about-hero {
-        padding: 20px 10px;
+        padding: 25px 20px;
+    }
+    
+    .kcl-about-hero-image .kcl-image-placeholder {
+        max-width: 300px;
     }
     
     .kcl-about-story {
-        padding: 15px 10px;
+        padding: 20px 15px;
+    }
+    
+    .kcl-about-story-image .kcl-image-placeholder {
+        max-width: 280px;
     }
     
     .kcl-team-card {
         padding: 20px 15px;
+    }
+    
+    .kcl-about-section {
+        padding: 0 10px;
     }
 }
 
@@ -1801,18 +1840,25 @@ i[class*="fa-"] {
     overflow: hidden;
 }
 
-.kcl-about-home-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
+.kcl-about-home-container {
+    text-align: center;
+    max-width: 900px;
+    padding: 0 30px;
 }
 
-.kcl-about-home-content .kcl-section-title {
-    text-align: left;
-    margin-bottom: 30px;
+.kcl-about-home-section .kcl-section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.kcl-about-home-image-wrapper {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+}
+
+.kcl-about-home-content {
+    text-align: center;
 }
 
 .kcl-about-home-text {
@@ -1820,14 +1866,13 @@ i[class*="fa-"] {
     font-size: 15px;
     line-height: 1.8;
     margin-bottom: 20px;
-}
-
-.kcl-about-home-image {
-    position: relative;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .kcl-about-placeholder {
-    height: 400px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1849,33 +1894,22 @@ i[class*="fa-"] {
     font-size: 14px;
 }
 
-@media (max-width: 992px) {
-    .kcl-about-home-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+@media (max-width: 768px) {
+    .kcl-about-home-container {
+        padding: 0 20px;
     }
     
-    /* Image on TOP of content on mobile */
-    .kcl-about-home-image {
-        order: -1;
-        width: 100%;
-        padding: 0 15px;
-        box-sizing: border-box;
-    }
-    
-    .kcl-about-home-content {
-        order: 1;
-        text-align: center;
-        padding: 0 15px;
-    }
-    
-    .kcl-about-home-content .kcl-section-title {
-        text-align: center;
+    .kcl-about-home-image-wrapper {
+        margin-bottom: 30px;
+        padding: 0;
     }
     
     .kcl-about-placeholder {
-        height: 280px;
-        margin: 0;
-        max-width: 100%;
+        height: 250px;
+    }
+    
+    .kcl-about-home-text {
+        font-size: 14px;
+        padding: 0 10px;
     }
 }
