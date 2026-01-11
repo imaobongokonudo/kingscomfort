@@ -386,18 +386,9 @@ i[class*="fa-"] {
     font-size: clamp(26px, 3.5vw, 40px);
     text-align: center;
     margin-bottom: 12px;
-    /* Sparkling effect for dark/white text parts to make them more visible */
-    background: linear-gradient(90deg, #FFFFFF 0%, #E2C369 20%, #FFFFFF 40%, #f5e6b3 60%, #FFFFFF 80%, #E2C369 100%);
-    background-size: 300% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: sparkle-dark-heading 4s ease-in-out infinite;
-}
-
-@keyframes sparkle-dark-heading {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    /* Brighter white text for better visibility */
+    color: #F5F5F5;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 .kcl-section-subtitle {
