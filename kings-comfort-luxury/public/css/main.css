@@ -362,9 +362,13 @@ i[class*="fa-"] {
 .kcl-hero-image img {
     width: 100%;
     height: auto;
-    border-radius: var(--kcl-radius);
+    border-radius: 30px;
     object-fit: cover;
     box-shadow: var(--kcl-shadow);
+}
+
+.kcl-hero-image .kcl-image-placeholder {
+    border-radius: 30px;
 }
 
 .kcl-image-placeholder {
