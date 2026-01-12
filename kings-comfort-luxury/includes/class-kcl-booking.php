@@ -32,7 +32,18 @@ class KCL_Booking {
             wp_send_json_error(array('message' => 'Please fill in all required fields.'));
         }
         
-        $price_per_night = get_post_meta($apartment_id, '_kcl_price_per_night', true);
+        // Handle demo apartments (negative IDs) or real apartments
+        if ($apartment_id < 0) {
+            // Demo apartment prices
+            $demo_prices = array(-1 => 150000, -2 => 250000, -3 => 450000);
+            $price_per_night = isset($demo_prices[$apartment_id]) ? $demo_prices[$apartment_id] : 150000;
+        } else {
+            $price_per_night = get_post_meta($apartment_id, '_kcl_price_per_night', true);
+            if (empty($price_per_night)) {
+                $price_per_night = 100000; // Default price
+            }
+        }
+        
         $check_in_date = new DateTime($check_in);
         $check_out_date = new DateTime($check_out);
         $nights = $check_in_date->diff($check_out_date)->days;

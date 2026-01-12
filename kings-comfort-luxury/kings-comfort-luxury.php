@@ -76,6 +76,7 @@ class Kings_Comfort_Luxury {
         KCL_Post_Types::init();
         KCL_Shortcodes::init();
         KCL_Booking::init();
+        KCL_Paystack::init();
         KCL_Ajax::init();
         KCL_Offline::init();
         
