@@ -62,47 +62,58 @@
             });
         },
 
-        // Site Images Uploader
+        // Site Images Uploader - Enhanced for cleaner UX
         initSiteImageUploader: function() {
-            // Upload button click
-            $('.kcl-upload-btn').on('click', function(e) {
-                e.preventDefault();
+            // Handle clicks on the entire image card
+            $(document).on('click', '.kcl-image-card', function(e) {
+                if ($(e.target).hasClass('kcl-remove-image-btn') || $(e.target).closest('.kcl-remove-image-btn').length) {
+                    return; // Don't open uploader if clicking remove button
+                }
                 const targetId = $(this).data('target');
-                const $input = $('#' + targetId);
-                const $preview = $('#preview_' + targetId);
-
-                const mediaUploader = wp.media({
-                    title: 'Select Image',
-                    button: {
-                        text: 'Use this image'
-                    },
-                    multiple: false
-                });
-
-                mediaUploader.on('select', function() {
-                    const attachment = mediaUploader.state().get('selection').first().toJSON();
-                    $input.val(attachment.url);
-                    $preview.html('<img src="' + attachment.url + '" alt="">');
-                });
-
-                mediaUploader.open();
+                KCLAdmin.openMediaUploader(targetId);
             });
 
             // Remove button click
-            $('.kcl-remove-btn').on('click', function(e) {
+            $(document).on('click', '.kcl-remove-image-btn', function(e) {
                 e.preventDefault();
+                e.stopPropagation();
                 const targetId = $(this).data('target');
+                const $card = $(this).closest('.kcl-image-card');
                 const $input = $('#' + targetId);
-                const $preview = $('#preview_' + targetId);
 
                 $input.val('');
-                $preview.html('<span class="dashicons dashicons-format-image"></span><span>Click to upload</span>');
+                $card.removeClass('has-image');
+                $card.find('.kcl-image-thumb').html('<span class="dashicons dashicons-cloud-upload"></span><span class="upload-text">Click to Upload</span>');
+                $card.find('.kcl-remove-image-btn').hide();
+            });
+        },
+
+        openMediaUploader: function(targetId) {
+            const $input = $('#' + targetId);
+            const $card = $('[data-target="' + targetId + '"]');
+
+            const mediaUploader = wp.media({
+                title: 'Select Image',
+                button: {
+                    text: 'Use this image'
+                },
+                library: {
+                    type: ['image']
+                },
+                multiple: false
             });
 
-            // Preview click to upload
-            $('.kcl-image-preview').on('click', function() {
-                $(this).siblings('.kcl-upload-btn').trigger('click');
+            mediaUploader.on('select', function() {
+                const attachment = mediaUploader.state().get('selection').first().toJSON();
+                const imgUrl = attachment.url;
+                
+                $input.val(imgUrl);
+                $card.addClass('has-image');
+                $card.find('.kcl-image-thumb').html('<img src="' + imgUrl + '" alt="">');
+                $card.find('.kcl-remove-image-btn').show();
             });
+
+            mediaUploader.open();
         },
 
         // Confirmation Dialogs

@@ -359,6 +359,14 @@ i[class*="fa-"] {
     max-width: 500px;
 }
 
+.kcl-hero-image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--kcl-radius);
+    object-fit: cover;
+    box-shadow: var(--kcl-shadow);
+}
+
 .kcl-image-placeholder {
     aspect-ratio: 4/3;
     background: var(--kcl-glass);
@@ -1518,6 +1526,14 @@ i[class*="fa-"] {
     align-items: center;
 }
 
+.kcl-about-hero-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var(--kcl-radius);
+    box-shadow: var(--kcl-shadow);
+}
+
 .kcl-about-hero-image .kcl-image-placeholder {
     height: 300px;
     width: 100%;
@@ -1547,6 +1563,14 @@ i[class*="fa-"] {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.kcl-about-story-image img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: var(--kcl-radius);
+    box-shadow: var(--kcl-shadow);
 }
 
 .kcl-about-story-image .kcl-image-placeholder {
@@ -1646,6 +1670,16 @@ i[class*="fa-"] {
 
 .kcl-team-image {
     margin-bottom: 20px;
+}
+
+.kcl-team-image img {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .kcl-team-image .kcl-image-placeholder {
@@ -1894,6 +1928,14 @@ i[class*="fa-"] {
     width: 100%;
     max-width: 100%;
     margin: 0 auto 40px auto;
+}
+
+.kcl-about-home-image-wrapper img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: var(--kcl-radius);
+    box-shadow: var(--kcl-shadow);
 }
 
 .kcl-about-home-content {

@@ -696,151 +696,93 @@ class KCL_Admin {
                     update_option($field, esc_url_raw(wp_unslash($_POST[$field])));
                 }
             }
-            echo '<div class="notice notice-success"><p>Images saved successfully!</p></div>';
+            echo '<div class="notice notice-success is-dismissible"><p><strong>Success!</strong> All images have been saved and are now live on your site.</p></div>';
         }
+
+        // Image configuration
+        $image_categories = array(
+            'homepage' => array(
+                'title' => 'Homepage Images',
+                'icon' => 'admin-home',
+                'images' => array(
+                    'kcl_hero_image' => 'Hero Banner',
+                    'kcl_about_image' => 'About Section',
+                )
+            ),
+            'about' => array(
+                'title' => 'About Page Images',
+                'icon' => 'info-outline',
+                'images' => array(
+                    'kcl_about_page_hero' => 'Page Hero',
+                    'kcl_about_page_story' => 'Our Story',
+                )
+            ),
+            'team' => array(
+                'title' => 'Team Members',
+                'icon' => 'groups',
+                'images' => array(
+                    'kcl_team_member_1' => 'Team Member 1',
+                    'kcl_team_member_2' => 'Team Member 2',
+                    'kcl_team_member_3' => 'Team Member 3',
+                    'kcl_team_member_4' => 'Team Member 4',
+                )
+            ),
+            'branding' => array(
+                'title' => 'Branding & Logos',
+                'icon' => 'art',
+                'images' => array(
+                    'kcl_logo_image' => 'Header Logo',
+                    'kcl_footer_logo' => 'Footer Logo',
+                )
+            ),
+        );
         ?>
         <div class="wrap kcl-admin-wrap">
-            <h1><span class="dashicons dashicons-format-image"></span> Site Images Management</h1>
-            <p>Upload and manage images for all sections of your site. Click on an image placeholder to upload a new image.</p>
+            <div class="kcl-images-page-header">
+                <h1><span class="dashicons dashicons-format-image"></span>Site Images Manager</h1>
+                <p>Click on any image card below to upload or replace images. WebP format is supported for optimal performance.</p>
+            </div>
             
             <form method="post" class="kcl-images-form">
                 <?php wp_nonce_field('kcl_save_images', 'kcl_images_nonce'); ?>
                 
-                <div class="kcl-images-grid">
-                    <div class="kcl-image-section">
-                        <h2>Homepage Images</h2>
-                        
-                        <div class="kcl-image-field">
-                            <label>Hero Section Image</label>
-                            <div class="kcl-image-preview" id="preview_kcl_hero_image">
-                                <?php $hero_img = get_option('kcl_hero_image'); ?>
-                                <?php if ($hero_img) : ?>
-                                    <img src="<?php echo esc_url($hero_img); ?>" alt="">
-                                <?php else : ?>
-                                    <span class="dashicons dashicons-format-image"></span>
-                                    <span>Click to upload</span>
-                                <?php endif; ?>
-                            </div>
-                            <input type="hidden" name="kcl_hero_image" id="kcl_hero_image" value="<?php echo esc_url(get_option('kcl_hero_image')); ?>">
-                            <button type="button" class="button kcl-upload-btn" data-target="kcl_hero_image">Upload Image</button>
-                            <button type="button" class="button kcl-remove-btn" data-target="kcl_hero_image">Remove</button>
+                <div class="kcl-images-sections">
+                    <?php foreach ($image_categories as $category_key => $category) : ?>
+                    <div class="kcl-image-category">
+                        <div class="kcl-image-category-header">
+                            <span class="dashicons dashicons-<?php echo esc_attr($category['icon']); ?>"></span>
+                            <h2><?php echo esc_html($category['title']); ?></h2>
                         </div>
-                        
-                        <div class="kcl-image-field">
-                            <label>About Section Image (Homepage)</label>
-                            <div class="kcl-image-preview" id="preview_kcl_about_image">
-                                <?php $about_img = get_option('kcl_about_image'); ?>
-                                <?php if ($about_img) : ?>
-                                    <img src="<?php echo esc_url($about_img); ?>" alt="">
-                                <?php else : ?>
-                                    <span class="dashicons dashicons-format-image"></span>
-                                    <span>Click to upload</span>
-                                <?php endif; ?>
+                        <div class="kcl-image-cards">
+                            <?php foreach ($category['images'] as $field_id => $label) : 
+                                $img_url = get_option($field_id);
+                                $has_image = !empty($img_url);
+                            ?>
+                            <div class="kcl-image-card <?php echo $has_image ? 'has-image' : ''; ?>" data-target="<?php echo esc_attr($field_id); ?>">
+                                <button type="button" class="kcl-remove-image-btn" data-target="<?php echo esc_attr($field_id); ?>" title="Remove Image" style="<?php echo $has_image ? '' : 'display:none;'; ?>">
+                                    <span class="dashicons dashicons-no-alt"></span>
+                                </button>
+                                <div class="kcl-image-thumb">
+                                    <?php if ($has_image) : ?>
+                                        <img src="<?php echo esc_url($img_url); ?>" alt="">
+                                    <?php else : ?>
+                                        <span class="dashicons dashicons-cloud-upload"></span>
+                                        <span class="upload-text">Click to Upload</span>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="kcl-image-card-label"><?php echo esc_html($label); ?></div>
+                                <input type="hidden" name="<?php echo esc_attr($field_id); ?>" id="<?php echo esc_attr($field_id); ?>" value="<?php echo esc_url($img_url); ?>">
                             </div>
-                            <input type="hidden" name="kcl_about_image" id="kcl_about_image" value="<?php echo esc_url(get_option('kcl_about_image')); ?>">
-                            <button type="button" class="button kcl-upload-btn" data-target="kcl_about_image">Upload Image</button>
-                            <button type="button" class="button kcl-remove-btn" data-target="kcl_about_image">Remove</button>
+                            <?php endforeach; ?>
                         </div>
                     </div>
-                    
-                    <div class="kcl-image-section">
-                        <h2>About Page Images</h2>
-                        
-                        <div class="kcl-image-field">
-                            <label>About Page Hero Image</label>
-                            <div class="kcl-image-preview" id="preview_kcl_about_page_hero">
-                                <?php $about_hero = get_option('kcl_about_page_hero'); ?>
-                                <?php if ($about_hero) : ?>
-                                    <img src="<?php echo esc_url($about_hero); ?>" alt="">
-                                <?php else : ?>
-                                    <span class="dashicons dashicons-format-image"></span>
-                                    <span>Click to upload</span>
-                                <?php endif; ?>
-                            </div>
-                            <input type="hidden" name="kcl_about_page_hero" id="kcl_about_page_hero" value="<?php echo esc_url(get_option('kcl_about_page_hero')); ?>">
-                            <button type="button" class="button kcl-upload-btn" data-target="kcl_about_page_hero">Upload Image</button>
-                            <button type="button" class="button kcl-remove-btn" data-target="kcl_about_page_hero">Remove</button>
-                        </div>
-                        
-                        <div class="kcl-image-field">
-                            <label>About Page Story Image</label>
-                            <div class="kcl-image-preview" id="preview_kcl_about_page_story">
-                                <?php $about_story = get_option('kcl_about_page_story'); ?>
-                                <?php if ($about_story) : ?>
-                                    <img src="<?php echo esc_url($about_story); ?>" alt="">
-                                <?php else : ?>
-                                    <span class="dashicons dashicons-format-image"></span>
-                                    <span>Click to upload</span>
-                                <?php endif; ?>
-                            </div>
-                            <input type="hidden" name="kcl_about_page_story" id="kcl_about_page_story" value="<?php echo esc_url(get_option('kcl_about_page_story')); ?>">
-                            <button type="button" class="button kcl-upload-btn" data-target="kcl_about_page_story">Upload Image</button>
-                            <button type="button" class="button kcl-remove-btn" data-target="kcl_about_page_story">Remove</button>
-                        </div>
-                    </div>
-                    
-                    <div class="kcl-image-section">
-                        <h2>Team Member Images</h2>
-                        
-                        <?php for ($i = 1; $i <= 4; $i++) : ?>
-                        <div class="kcl-image-field">
-                            <label>Team Member <?php echo esc_html($i); ?></label>
-                            <div class="kcl-image-preview" id="preview_kcl_team_member_<?php echo esc_attr($i); ?>">
-                                <?php $team_img = get_option('kcl_team_member_' . $i); ?>
-                                <?php if ($team_img) : ?>
-                                    <img src="<?php echo esc_url($team_img); ?>" alt="">
-                                <?php else : ?>
-                                    <span class="dashicons dashicons-admin-users"></span>
-                                    <span>Click to upload</span>
-                                <?php endif; ?>
-                            </div>
-                            <input type="hidden" name="kcl_team_member_<?php echo esc_attr($i); ?>" id="kcl_team_member_<?php echo esc_attr($i); ?>" value="<?php echo esc_url(get_option('kcl_team_member_' . $i)); ?>">
-                            <button type="button" class="button kcl-upload-btn" data-target="kcl_team_member_<?php echo esc_attr($i); ?>">Upload Image</button>
-                            <button type="button" class="button kcl-remove-btn" data-target="kcl_team_member_<?php echo esc_attr($i); ?>">Remove</button>
-                        </div>
-                        <?php endfor; ?>
-                    </div>
-                    
-                    <div class="kcl-image-section">
-                        <h2>Logo Images</h2>
-                        
-                        <div class="kcl-image-field">
-                            <label>Site Logo (Header)</label>
-                            <div class="kcl-image-preview" id="preview_kcl_logo_image">
-                                <?php $logo_img = get_option('kcl_logo_image'); ?>
-                                <?php if ($logo_img) : ?>
-                                    <img src="<?php echo esc_url($logo_img); ?>" alt="">
-                                <?php else : ?>
-                                    <span class="dashicons dashicons-format-image"></span>
-                                    <span>Click to upload</span>
-                                <?php endif; ?>
-                            </div>
-                            <input type="hidden" name="kcl_logo_image" id="kcl_logo_image" value="<?php echo esc_url(get_option('kcl_logo_image')); ?>">
-                            <button type="button" class="button kcl-upload-btn" data-target="kcl_logo_image">Upload Image</button>
-                            <button type="button" class="button kcl-remove-btn" data-target="kcl_logo_image">Remove</button>
-                        </div>
-                        
-                        <div class="kcl-image-field">
-                            <label>Footer Logo</label>
-                            <div class="kcl-image-preview" id="preview_kcl_footer_logo">
-                                <?php $footer_logo = get_option('kcl_footer_logo'); ?>
-                                <?php if ($footer_logo) : ?>
-                                    <img src="<?php echo esc_url($footer_logo); ?>" alt="">
-                                <?php else : ?>
-                                    <span class="dashicons dashicons-format-image"></span>
-                                    <span>Click to upload</span>
-                                <?php endif; ?>
-                            </div>
-                            <input type="hidden" name="kcl_footer_logo" id="kcl_footer_logo" value="<?php echo esc_url(get_option('kcl_footer_logo')); ?>">
-                            <button type="button" class="button kcl-upload-btn" data-target="kcl_footer_logo">Upload Image</button>
-                            <button type="button" class="button kcl-remove-btn" data-target="kcl_footer_logo">Remove</button>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
                 
-                <p class="submit">
-                    <input type="submit" name="kcl_save_images" class="button button-primary button-large" value="Save All Images">
-                </p>
+                <div class="kcl-save-images-bar">
+                    <p><span class="dashicons dashicons-info-outline"></span> Changes will be reflected immediately on your live site after saving.</p>
+                    <input type="submit" name="kcl_save_images" class="button button-primary button-large" value="💾 Save All Images">
+                </div>
             </form>
         </div>
         <?php

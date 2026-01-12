@@ -92,6 +92,10 @@ class KCL_Shortcodes {
     
     public static function homepage($atts) {
         ob_start();
+        <?php 
+        $hero_image = get_option('kcl_hero_image');
+        $about_image = get_option('kcl_about_image');
+        $logo_image = get_option('kcl_logo_image');
         ?>
         <!-- Hero Section -->
         <section class="kcl-hero kcl-section" data-section="hero">
@@ -105,7 +109,11 @@ class KCL_Shortcodes {
                 </div>
             </div>
             <div class="kcl-hero-image">
-                <div class="kcl-image-placeholder"><i class="fas fa-building"></i></div>
+                <?php if ($hero_image) : ?>
+                    <img src="<?php echo esc_url($hero_image); ?>" alt="Kings Comfort Luxury Apartments" loading="lazy">
+                <?php else : ?>
+                    <div class="kcl-image-placeholder"><i class="fas fa-building"></i></div>
+                <?php endif; ?>
             </div>
         </section>
 
@@ -228,10 +236,14 @@ class KCL_Shortcodes {
             <div class="kcl-container kcl-about-home-container">
                 <h2 class="kcl-section-title kcl-animate-fade-up">About <span class="kcl-gold">Kings Comfort</span></h2>
                 <div class="kcl-about-home-image-wrapper kcl-animate-fade-up">
-                    <div class="kcl-image-placeholder kcl-about-placeholder">
-                        <i class="fas fa-building"></i>
-                        <span>About Kings Comfort</span>
-                    </div>
+                    <?php if ($about_image) : ?>
+                        <img src="<?php echo esc_url($about_image); ?>" alt="About Kings Comfort" loading="lazy">
+                    <?php else : ?>
+                        <div class="kcl-image-placeholder kcl-about-placeholder">
+                            <i class="fas fa-building"></i>
+                            <span>About Kings Comfort</span>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="kcl-about-home-content kcl-animate-fade-up">
                     <p class="kcl-about-home-text">Kings Comfort Luxury is Abuja's premier service apartment destination, offering an unparalleled blend of comfort, elegance, and personalized hospitality. Nestled in the serene Kabusa area, we provide discerning guests with a home away from home experience.</p>
@@ -726,6 +738,12 @@ class KCL_Shortcodes {
     
     public static function about($atts) {
         ob_start();
+        $about_page_hero = get_option('kcl_about_page_hero');
+        $about_page_story = get_option('kcl_about_page_story');
+        $team_member_1 = get_option('kcl_team_member_1');
+        $team_member_2 = get_option('kcl_team_member_2');
+        $team_member_3 = get_option('kcl_team_member_3');
+        $team_member_4 = get_option('kcl_team_member_4');
         ?>
         <section class="kcl-page-section kcl-about-page">
             <div class="kcl-container">
@@ -740,7 +758,11 @@ class KCL_Shortcodes {
                         <p>Located in the prestigious Kabusa area, our apartments provide the perfect sanctuary for business executives, diplomats, tourists, and families seeking a home away from home with all the amenities of a five-star hotel.</p>
                     </div>
                     <div class="kcl-about-hero-image">
-                        <div class="kcl-image-placeholder"><i class="fas fa-building"></i></div>
+                        <?php if ($about_page_hero) : ?>
+                            <img src="<?php echo esc_url($about_page_hero); ?>" alt="Kings Comfort Luxury" loading="lazy">
+                        <?php else : ?>
+                            <div class="kcl-image-placeholder"><i class="fas fa-building"></i></div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 
@@ -749,7 +771,11 @@ class KCL_Shortcodes {
                     <h2 class="kcl-section-title">Our <span class="kcl-gold">Story</span></h2>
                     <div class="kcl-about-story kcl-glass-card">
                         <div class="kcl-about-story-image">
-                            <div class="kcl-image-placeholder"><i class="fas fa-crown"></i></div>
+                            <?php if ($about_page_story) : ?>
+                                <img src="<?php echo esc_url($about_page_story); ?>" alt="Our Story" loading="lazy">
+                            <?php else : ?>
+                                <div class="kcl-image-placeholder"><i class="fas fa-crown"></i></div>
+                            <?php endif; ?>
                         </div>
                         <div class="kcl-about-story-content">
                             <p>Kings Comfort Luxury was born from a simple yet powerful idea: to create a space where every guest feels like royalty. Our founders, with decades of experience in the hospitality industry, envisioned apartments that would exceed expectations in every way.</p>
@@ -821,19 +847,37 @@ class KCL_Shortcodes {
                     <p class="kcl-section-subtitle">Meet the dedicated professionals behind your exceptional experience</p>
                     <div class="kcl-team-grid">
                         <div class="kcl-team-card kcl-glass-card">
-                            <div class="kcl-team-image"><div class="kcl-image-placeholder"><i class="fas fa-user"></i></div></div>
+                            <div class="kcl-team-image">
+                                <?php if ($team_member_1) : ?>
+                                    <img src="<?php echo esc_url($team_member_1); ?>" alt="Management Team" loading="lazy">
+                                <?php else : ?>
+                                    <div class="kcl-image-placeholder"><i class="fas fa-user"></i></div>
+                                <?php endif; ?>
+                            </div>
                             <h4>Management Team</h4>
                             <p class="kcl-team-role">Leadership & Strategy</p>
                             <p>Our experienced management team ensures every aspect of your stay meets the highest standards of luxury and comfort.</p>
                         </div>
                         <div class="kcl-team-card kcl-glass-card">
-                            <div class="kcl-team-image"><div class="kcl-image-placeholder"><i class="fas fa-user"></i></div></div>
+                            <div class="kcl-team-image">
+                                <?php if ($team_member_2) : ?>
+                                    <img src="<?php echo esc_url($team_member_2); ?>" alt="Concierge Team" loading="lazy">
+                                <?php else : ?>
+                                    <div class="kcl-image-placeholder"><i class="fas fa-user"></i></div>
+                                <?php endif; ?>
+                            </div>
                             <h4>Concierge Team</h4>
                             <p class="kcl-team-role">Guest Services</p>
                             <p>Available 24/7 to assist with reservations, special requests, and local recommendations to enhance your stay.</p>
                         </div>
                         <div class="kcl-team-card kcl-glass-card">
-                            <div class="kcl-team-image"><div class="kcl-image-placeholder"><i class="fas fa-user"></i></div></div>
+                            <div class="kcl-team-image">
+                                <?php if ($team_member_3) : ?>
+                                    <img src="<?php echo esc_url($team_member_3); ?>" alt="Housekeeping Team" loading="lazy">
+                                <?php else : ?>
+                                    <div class="kcl-image-placeholder"><i class="fas fa-user"></i></div>
+                                <?php endif; ?>
+                            </div>
                             <h4>Housekeeping Team</h4>
                             <p class="kcl-team-role">Cleanliness & Comfort</p>
                             <p>Our meticulous housekeeping staff maintains impeccable cleanliness standards throughout all properties.</p>
