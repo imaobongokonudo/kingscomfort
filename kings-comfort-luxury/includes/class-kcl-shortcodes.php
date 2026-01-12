@@ -91,11 +91,11 @@ class KCL_Shortcodes {
     }
     
     public static function homepage($atts) {
-        ob_start();
-        <?php 
         $hero_image = get_option('kcl_hero_image');
         $about_image = get_option('kcl_about_image');
         $logo_image = get_option('kcl_logo_image');
+        
+        ob_start();
         ?>
         <!-- Hero Section -->
         <section class="kcl-hero kcl-section" data-section="hero">
