@@ -521,14 +521,31 @@ class KCL_Shortcodes {
                                 <option value="">Choose an apartment</option>
                                 <?php
                                 $apartments = new WP_Query(array('post_type' => 'kcl_apartment', 'posts_per_page' => -1, 'post_status' => 'publish'));
-                                while ($apartments->have_posts()) : $apartments->the_post();
-                                    $price = get_post_meta(get_the_ID(), '_kcl_price_per_night', true);
-                                    $selected = ($selected_apartment === get_the_ID()) ? 'selected' : '';
-                                    ?>
-                                    <option value="<?php echo esc_attr(get_the_ID()); ?>" data-price="<?php echo esc_attr($price); ?>" <?php echo esc_attr($selected); ?>>
-                                        <?php the_title(); ?> - <?php echo esc_html(kcl_format_price($price ?: 100000)); ?>/night
-                                    </option>
-                                <?php endwhile; wp_reset_postdata(); ?>
+                                if ($apartments->have_posts()) :
+                                    while ($apartments->have_posts()) : $apartments->the_post();
+                                        $price = get_post_meta(get_the_ID(), '_kcl_price_per_night', true);
+                                        $selected = ($selected_apartment === get_the_ID()) ? 'selected' : '';
+                                        ?>
+                                        <option value="<?php echo esc_attr(get_the_ID()); ?>" data-price="<?php echo esc_attr($price ?: 100000); ?>" <?php echo esc_attr($selected); ?>>
+                                            <?php the_title(); ?> - <?php echo esc_html(kcl_format_price($price ?: 100000)); ?>/night
+                                        </option>
+                                    <?php endwhile; wp_reset_postdata();
+                                else :
+                                    // Show demo apartments when no real apartments exist
+                                    $demo_apartments = array(
+                                        array('name' => 'Premium Suite', 'price' => 150000),
+                                        array('name' => 'Executive Suite', 'price' => 250000),
+                                        array('name' => 'Royal Penthouse', 'price' => 450000),
+                                    );
+                                    foreach ($demo_apartments as $index => $demo) :
+                                        $demo_id = -($index + 1);
+                                        ?>
+                                        <option value="<?php echo esc_attr($demo_id); ?>" data-price="<?php echo esc_attr($demo['price']); ?>">
+                                            <?php echo esc_html($demo['name']); ?> - <?php echo esc_html(kcl_format_price($demo['price'])); ?>/night
+                                        </option>
+                                    <?php endforeach;
+                                endif;
+                                ?>
                             </select>
                         </div>
                         

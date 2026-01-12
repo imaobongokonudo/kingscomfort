@@ -745,6 +745,7 @@ i[class*="fa-"] {
     display: flex;
     align-items: center;
     gap: 8px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-form-section h3 i {
@@ -1143,6 +1144,7 @@ i[class*="fa-"] {
     font-size: clamp(36px, 5vw, 56px);
     text-align: center;
     margin-bottom: 20px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-page-subtitle {
@@ -1204,7 +1206,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 22px;
     margin-bottom: 15px;
-    color: var(--kcl-background-bright);
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-concierge-card p {
@@ -1239,6 +1241,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 36px;
     margin-bottom: 15px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-loyalty-tiers-full {
@@ -1278,6 +1281,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 24px;
     margin-bottom: 5px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-tier-header span {
@@ -1312,6 +1316,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 28px;
     margin-bottom: 15px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-loyalty-cta p {
@@ -1331,6 +1336,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 24px;
     margin-bottom: 15px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-profile-lookup p {
@@ -1419,6 +1425,7 @@ i[class*="fa-"] {
     display: flex;
     align-items: center;
     gap: 10px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-profile-bookings h3 i {
@@ -1462,7 +1469,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 22px;
     margin-bottom: 10px;
-    color: var(--kcl-background-bright);
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-amenity-info p {
@@ -1513,6 +1520,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 32px;
     margin-bottom: 20px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-about-hero-content p {
@@ -1622,7 +1630,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 22px;
     margin-bottom: 15px;
-    color: var(--kcl-background-bright);
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-mission-card p {
@@ -1652,7 +1660,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 18px;
     margin-bottom: 12px;
-    color: var(--kcl-background-bright);
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-why-card p {
@@ -1697,7 +1705,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 20px;
     margin-bottom: 5px;
-    color: var(--kcl-background-bright);
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-team-role {
@@ -1724,6 +1732,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 32px;
     margin-bottom: 15px;
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-about-cta p {
