@@ -2008,3 +2008,251 @@ i[class*="fa-"] {
         padding: 0 10px;
     }
 }
+
+/* ============================================
+   Single Apartment Page Styles
+   ============================================ */
+
+.kcl-single-apartment {
+    padding: 120px 0 60px;
+    min-height: 100vh;
+}
+
+.kcl-apartment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.kcl-apartment-header h1 {
+    margin: 0;
+    text-align: left;
+}
+
+.kcl-apartment-price-display {
+    background: var(--kcl-glass);
+    padding: 15px 30px;
+    border-radius: var(--kcl-radius-sm);
+    border: 1px solid var(--kcl-glass-border);
+}
+
+.kcl-price-amount {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--kcl-primary);
+}
+
+.kcl-price-period {
+    font-size: 16px;
+    color: var(--kcl-text-muted);
+}
+
+.kcl-apartment-gallery {
+    margin-bottom: 40px;
+}
+
+.kcl-gallery-main {
+    border-radius: var(--kcl-radius);
+    overflow: hidden;
+    border: 1px solid var(--kcl-glass-border);
+}
+
+.kcl-gallery-main img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+}
+
+.kcl-gallery-main .kcl-image-placeholder {
+    height: 450px;
+    border-radius: 0;
+}
+
+.kcl-apartment-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 40px;
+}
+
+.kcl-apartment-info h2,
+.kcl-apartment-info h3 {
+    font-family: var(--kcl-font-heading);
+    margin-bottom: 20px;
+    animation: heading-color-flow 4s ease-in-out infinite;
+}
+
+.kcl-apartment-info h2 {
+    font-size: 28px;
+}
+
+.kcl-apartment-info h3 {
+    font-size: 22px;
+    margin-top: 35px;
+}
+
+.kcl-apartment-description {
+    color: var(--kcl-text-muted);
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.kcl-apartment-specs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.kcl-spec-item {
+    background: var(--kcl-glass);
+    padding: 20px;
+    border-radius: var(--kcl-radius-sm);
+    text-align: center;
+    border: 1px solid var(--kcl-glass-border);
+}
+
+.kcl-spec-item i {
+    font-size: 24px;
+    color: var(--kcl-primary);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.kcl-spec-item span {
+    font-size: 14px;
+    color: var(--kcl-text);
+}
+
+.kcl-apartment-amenities-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.kcl-apartment-amenities-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--kcl-text-muted);
+    font-size: 14px;
+}
+
+.kcl-apartment-amenities-list i {
+    color: var(--kcl-primary);
+}
+
+.kcl-apartment-booking-card {
+    position: sticky;
+    top: 100px;
+    padding: 30px;
+    text-align: center;
+}
+
+.kcl-apartment-booking-card h3 {
+    font-family: var(--kcl-font-heading);
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.kcl-booking-card-price {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--kcl-primary);
+    margin-bottom: 25px;
+}
+
+.kcl-booking-card-price small {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--kcl-text-muted);
+}
+
+.kcl-btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.kcl-btn-outline {
+    background: transparent;
+    color: var(--kcl-primary);
+    border: 2px solid var(--kcl-primary);
+}
+
+.kcl-btn-outline:hover {
+    background: var(--kcl-primary);
+    color: var(--kcl-background);
+}
+
+.kcl-btn-outline i {
+    margin-right: 8px;
+}
+
+/* Single Apartment Responsive */
+@media (max-width: 992px) {
+    .kcl-apartment-details-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .kcl-apartment-booking-card {
+        position: relative;
+        top: 0;
+    }
+    
+    .kcl-apartment-specs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .kcl-single-apartment {
+        padding: 100px 15px 80px;
+    }
+    
+    .kcl-apartment-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .kcl-apartment-header h1 {
+        text-align: center;
+    }
+    
+    .kcl-gallery-main img,
+    .kcl-gallery-main .kcl-image-placeholder {
+        height: 280px;
+    }
+    
+    .kcl-apartment-amenities-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .kcl-apartment-info h2 {
+        font-size: 24px;
+    }
+    
+    .kcl-apartment-info h3 {
+        font-size: 20px;
+    }
+}
+
+/* ============================================
+   Marquee Mobile Fix - Show All Categories
+   ============================================ */
+@media (max-width: 768px) {
+    .kcl-marquee-track {
+        gap: 25px;
+        animation: marquee 25s linear infinite;
+    }
+    
+    .kcl-marquee-track span {
+        font-size: 12px;
+        letter-spacing: 1px;
+        flex-shrink: 0;
+    }
+}

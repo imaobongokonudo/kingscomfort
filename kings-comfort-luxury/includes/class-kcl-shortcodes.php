@@ -126,9 +126,15 @@ class KCL_Shortcodes {
                 <span>Corporate Retreats</span><span class="kcl-gold">★</span>
                 <span>Diplomats</span><span class="kcl-gold">★</span>
                 <span>Celebrities</span><span class="kcl-gold">★</span>
+                <span>Honeymooners</span><span class="kcl-gold">★</span>
                 <span>Business Executives</span><span class="kcl-gold">★</span>
                 <span>Tourists</span><span class="kcl-gold">★</span>
                 <span>Families</span><span class="kcl-gold">★</span>
+                <span>Couples</span><span class="kcl-gold">★</span>
+                <span>Corporate Retreats</span><span class="kcl-gold">★</span>
+                <span>Diplomats</span><span class="kcl-gold">★</span>
+                <span>Celebrities</span><span class="kcl-gold">★</span>
+                <span>Honeymooners</span><span class="kcl-gold">★</span>
             </div>
         </section>
 

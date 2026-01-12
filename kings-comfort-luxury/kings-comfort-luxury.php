@@ -72,6 +72,9 @@ class Kings_Comfort_Luxury {
         add_action('wp_body_open', array($this, 'add_site_header'));
         add_action('wp_footer', array($this, 'add_site_footer'), 5);
         
+        // Add single apartment template
+        add_filter('the_content', array($this, 'apartment_single_content'));
+        
         // Initialize components
         KCL_Post_Types::init();
         KCL_Shortcodes::init();
@@ -205,6 +208,111 @@ class Kings_Comfort_Luxury {
             <span class="kcl-current-section-name"></span>
         </div>
         <?php
+    }
+    
+    public function apartment_single_content($content) {
+        // Only modify content for single apartment posts
+        if (!is_singular('kcl_apartment')) {
+            return $content;
+        }
+        
+        global $post;
+        $price = get_post_meta($post->ID, '_kcl_price_per_night', true);
+        $bedrooms = get_post_meta($post->ID, '_kcl_bedrooms', true);
+        $bathrooms = get_post_meta($post->ID, '_kcl_bathrooms', true);
+        $size = get_post_meta($post->ID, '_kcl_size', true);
+        $amenities = get_post_meta($post->ID, '_kcl_amenities', true);
+        
+        ob_start();
+        ?>
+        <div class="kcl-single-apartment">
+            <div class="kcl-container">
+                <div class="kcl-apartment-header">
+                    <h1 class="kcl-section-title kcl-heading-animate"><?php echo esc_html(get_the_title()); ?></h1>
+                    <div class="kcl-apartment-price-display">
+                        <span class="kcl-price-amount"><?php echo esc_html(kcl_format_price($price ?: 150000)); ?></span>
+                        <span class="kcl-price-period">/night</span>
+                    </div>
+                </div>
+                
+                <div class="kcl-apartment-gallery">
+                    <?php if (has_post_thumbnail()) : ?>
+                        <div class="kcl-gallery-main">
+                            <?php the_post_thumbnail('large', array('class' => 'kcl-main-image')); ?>
+                        </div>
+                    <?php else : ?>
+                        <div class="kcl-gallery-main">
+                            <div class="kcl-image-placeholder"><i class="fas fa-image"></i></div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="kcl-apartment-details-grid">
+                    <div class="kcl-apartment-info">
+                        <h2 class="kcl-heading-animate">About This Apartment</h2>
+                        <div class="kcl-apartment-description">
+                            <?php echo wp_kses_post($content); ?>
+                        </div>
+                        
+                        <div class="kcl-apartment-specs">
+                            <div class="kcl-spec-item">
+                                <i class="fas fa-bed"></i>
+                                <span><?php echo esc_html($bedrooms ?: '4'); ?> Bedrooms</span>
+                            </div>
+                            <div class="kcl-spec-item">
+                                <i class="fas fa-bath"></i>
+                                <span><?php echo esc_html($bathrooms ?: '3'); ?> Bathrooms</span>
+                            </div>
+                            <div class="kcl-spec-item">
+                                <i class="fas fa-ruler-combined"></i>
+                                <span><?php echo esc_html($size ?: '250'); ?> sqm</span>
+                            </div>
+                            <div class="kcl-spec-item">
+                                <i class="fas fa-users"></i>
+                                <span>Up to 8 Guests</span>
+                            </div>
+                        </div>
+                        
+                        <?php if (!empty($amenities)) : ?>
+                        <h3 class="kcl-heading-animate">Amenities</h3>
+                        <ul class="kcl-apartment-amenities-list">
+                            <?php 
+                            $amenities_array = is_array($amenities) ? $amenities : explode(',', $amenities);
+                            foreach ($amenities_array as $amenity) : 
+                                $amenity = trim($amenity);
+                                if (!empty($amenity)) :
+                            ?>
+                                <li><i class="fas fa-check-circle"></i> <?php echo esc_html($amenity); ?></li>
+                            <?php endif; endforeach; ?>
+                        </ul>
+                        <?php else : ?>
+                        <h3 class="kcl-heading-animate">Amenities</h3>
+                        <ul class="kcl-apartment-amenities-list">
+                            <li><i class="fas fa-check-circle"></i> Private Swimming Pool</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Power Supply</li>
+                            <li><i class="fas fa-check-circle"></i> High-Speed Internet</li>
+                            <li><i class="fas fa-check-circle"></i> Premium Furnishings</li>
+                            <li><i class="fas fa-check-circle"></i> Integrated Ceiling Speakers</li>
+                            <li><i class="fas fa-check-circle"></i> Secure Environment</li>
+                        </ul>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <div class="kcl-apartment-booking-card kcl-glass-card">
+                        <h3 class="kcl-heading-animate">Book This Apartment</h3>
+                        <div class="kcl-booking-card-price">
+                            <?php echo esc_html(kcl_format_price($price ?: 150000)); ?><small>/night</small>
+                        </div>
+                        <a href="<?php echo esc_url(home_url('/booking/?apartment=' . $post->ID)); ?>" class="kcl-btn kcl-btn-primary kcl-btn-block">Book Now</a>
+                        <a href="https://wa.me/<?php echo esc_attr(KCL_WHATSAPP_NUMBER); ?>?text=I%20am%20interested%20in%20<?php echo urlencode(get_the_title()); ?>" target="_blank" class="kcl-btn kcl-btn-outline kcl-btn-block">
+                            <i class="fab fa-whatsapp"></i> Contact via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+        return ob_get_clean();
     }
     
     public function add_site_header() {
