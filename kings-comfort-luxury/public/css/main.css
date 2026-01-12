@@ -24,6 +24,30 @@
     --kcl-font-body: 'Montserrat', sans-serif;
 }
 
+/* Heading Color Animation Effect */
+@keyframes heading-color-flow {
+    0%, 100% { 
+        color: var(--kcl-background-bright);
+        text-shadow: 0 0 15px rgba(90, 90, 122, 0.3);
+    }
+    25% { 
+        color: #7A7A9A;
+        text-shadow: 0 0 20px rgba(122, 122, 154, 0.4);
+    }
+    50% { 
+        color: #8A8AAA;
+        text-shadow: 0 0 25px rgba(138, 138, 170, 0.5);
+    }
+    75% { 
+        color: #7A7A9A;
+        text-shadow: 0 0 20px rgba(122, 122, 154, 0.4);
+    }
+}
+
+.kcl-heading-animate {
+    animation: heading-color-flow 4s ease-in-out infinite;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -390,9 +414,8 @@ i[class*="fa-"] {
     font-size: clamp(26px, 3.5vw, 40px);
     text-align: center;
     margin-bottom: 12px;
-    /* Brighter version of background color for visibility */
-    color: var(--kcl-background-bright);
-    text-shadow: 0 0 15px rgba(90, 90, 122, 0.3);
+    /* Brighter version of background color with animation */
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-section-subtitle {
@@ -443,7 +466,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 18px;
     margin-bottom: 8px;
-    color: var(--kcl-background-bright);
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-card-meta {
@@ -574,7 +597,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 18px;
     margin-bottom: 12px;
-    color: var(--kcl-background-bright);
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-service-card p {
@@ -617,7 +640,7 @@ i[class*="fa-"] {
     font-family: var(--kcl-font-heading);
     font-size: 24px;
     margin-bottom: 15px;
-    color: var(--kcl-background-bright);
+    animation: heading-color-flow 4s ease-in-out infinite;
 }
 
 .kcl-tier-card ul {

@@ -22,7 +22,7 @@ class KCL_Admin {
         global $post_type;
         
         if (in_array($post_type, array('kcl_apartment', 'kcl_amenity', 'kcl_concierge', 'kcl_offer')) || 
-            strpos($hook, 'kings-comfort') !== false) {
+            strpos($hook, 'kings-comfort') !== false || strpos($hook, 'kcl-') !== false) {
             wp_enqueue_media();
             wp_enqueue_style('kcl-admin-style', KCL_PLUGIN_URL . 'admin/css/admin.css', array(), KCL_VERSION);
             wp_enqueue_script('kcl-admin-script', KCL_PLUGIN_URL . 'admin/js/admin.js', array('jquery', 'wp-color-picker'), KCL_VERSION, true);
@@ -84,6 +84,15 @@ class KCL_Admin {
             'manage_options',
             'kcl-settings',
             array(__CLASS__, 'settings_page')
+        );
+        
+        add_submenu_page(
+            'kings-comfort',
+            __('Site Images', 'kings-comfort-luxury'),
+            __('Site Images', 'kings-comfort-luxury'),
+            'manage_options',
+            'kcl-images',
+            array(__CLASS__, 'images_page')
         );
     }
     
@@ -270,6 +279,54 @@ class KCL_Admin {
         $action = isset($_GET['action']) ? sanitize_text_field(wp_unslash($_GET['action'])) : '';
         $booking_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
         
+        // Handle Create Booking
+        if (isset($_POST['kcl_create_booking']) && wp_verify_nonce(isset($_POST['kcl_booking_nonce']) ? sanitize_text_field(wp_unslash($_POST['kcl_booking_nonce'])) : '', 'kcl_save_booking')) {
+            $new_booking_id = 'KCL-' . strtoupper(wp_generate_password(8, false));
+            $wpdb->insert($table_name, array(
+                'booking_id' => $new_booking_id,
+                'apartment_id' => isset($_POST['apartment_id']) ? intval($_POST['apartment_id']) : 0,
+                'guest_name' => isset($_POST['guest_name']) ? sanitize_text_field(wp_unslash($_POST['guest_name'])) : '',
+                'guest_email' => isset($_POST['guest_email']) ? sanitize_email(wp_unslash($_POST['guest_email'])) : '',
+                'guest_phone' => isset($_POST['guest_phone']) ? sanitize_text_field(wp_unslash($_POST['guest_phone'])) : '',
+                'check_in' => isset($_POST['check_in']) ? sanitize_text_field(wp_unslash($_POST['check_in'])) : '',
+                'check_out' => isset($_POST['check_out']) ? sanitize_text_field(wp_unslash($_POST['check_out'])) : '',
+                'guests' => isset($_POST['guests']) ? intval($_POST['guests']) : 1,
+                'total_amount' => isset($_POST['total_amount']) ? floatval($_POST['total_amount']) : 0,
+                'payment_status' => isset($_POST['payment_status']) ? sanitize_text_field(wp_unslash($_POST['payment_status'])) : 'pending',
+                'booking_status' => isset($_POST['booking_status']) ? sanitize_text_field(wp_unslash($_POST['booking_status'])) : 'pending',
+                'special_requests' => isset($_POST['special_requests']) ? sanitize_textarea_field(wp_unslash($_POST['special_requests'])) : '',
+                'created_at' => current_time('mysql'),
+            ));
+            echo '<div class="notice notice-success"><p>Booking created successfully! ID: ' . esc_html($new_booking_id) . '</p></div>';
+        }
+        
+        // Handle Update Booking
+        if (isset($_POST['kcl_update_booking']) && wp_verify_nonce(isset($_POST['kcl_booking_nonce']) ? sanitize_text_field(wp_unslash($_POST['kcl_booking_nonce'])) : '', 'kcl_save_booking')) {
+            $update_id = isset($_POST['booking_db_id']) ? intval($_POST['booking_db_id']) : 0;
+            if ($update_id) {
+                $wpdb->update($table_name, array(
+                    'apartment_id' => isset($_POST['apartment_id']) ? intval($_POST['apartment_id']) : 0,
+                    'guest_name' => isset($_POST['guest_name']) ? sanitize_text_field(wp_unslash($_POST['guest_name'])) : '',
+                    'guest_email' => isset($_POST['guest_email']) ? sanitize_email(wp_unslash($_POST['guest_email'])) : '',
+                    'guest_phone' => isset($_POST['guest_phone']) ? sanitize_text_field(wp_unslash($_POST['guest_phone'])) : '',
+                    'check_in' => isset($_POST['check_in']) ? sanitize_text_field(wp_unslash($_POST['check_in'])) : '',
+                    'check_out' => isset($_POST['check_out']) ? sanitize_text_field(wp_unslash($_POST['check_out'])) : '',
+                    'guests' => isset($_POST['guests']) ? intval($_POST['guests']) : 1,
+                    'total_amount' => isset($_POST['total_amount']) ? floatval($_POST['total_amount']) : 0,
+                    'payment_status' => isset($_POST['payment_status']) ? sanitize_text_field(wp_unslash($_POST['payment_status'])) : 'pending',
+                    'booking_status' => isset($_POST['booking_status']) ? sanitize_text_field(wp_unslash($_POST['booking_status'])) : 'pending',
+                    'special_requests' => isset($_POST['special_requests']) ? sanitize_textarea_field(wp_unslash($_POST['special_requests'])) : '',
+                ), array('id' => $update_id));
+                echo '<div class="notice notice-success"><p>Booking updated successfully!</p></div>';
+            }
+        }
+        
+        // Handle Delete Booking
+        if ($action === 'delete' && $booking_id && wp_verify_nonce(isset($_GET['_wpnonce']) ? sanitize_text_field(wp_unslash($_GET['_wpnonce'])) : '', 'kcl_delete_booking')) {
+            $wpdb->delete($table_name, array('id' => $booking_id), array('%d'));
+            echo '<div class="notice notice-warning"><p>Booking deleted.</p></div>';
+        }
+        
         if ($action === 'confirm' && $booking_id && wp_verify_nonce(isset($_GET['_wpnonce']) ? sanitize_text_field(wp_unslash($_GET['_wpnonce'])) : '', 'kcl_confirm_booking')) {
             $wpdb->update($table_name, array('booking_status' => 'confirmed'), array('id' => $booking_id), array('%s'), array('%d'));
             echo '<div class="notice notice-success"><p>Booking confirmed!</p></div>';
@@ -280,8 +337,16 @@ class KCL_Admin {
             echo '<div class="notice notice-warning"><p>Booking cancelled.</p></div>';
         }
         
+        // Get apartments for dropdown
+        $apartments = get_posts(array('post_type' => 'kcl_apartment', 'posts_per_page' => -1, 'orderby' => 'title', 'order' => 'ASC'));
+        
+        // Edit Mode
+        $edit_booking = null;
+        if ($action === 'edit' && $booking_id) {
+            $edit_booking = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $booking_id));
+        }
+        
         $status_filter = isset($_GET['status']) ? sanitize_text_field(wp_unslash($_GET['status'])) : '';
-        // Validate status filter against allowed values
         $allowed_statuses = array('pending', 'confirmed', 'cancelled', 'completed');
         $where = '';
         if ($status_filter && in_array($status_filter, $allowed_statuses, true)) {
@@ -299,7 +364,99 @@ class KCL_Admin {
         <div class="wrap kcl-admin-wrap">
             <h1>Bookings Management</h1>
             
+            <?php if ($action === 'new' || $action === 'edit') : ?>
+            <!-- Create/Edit Booking Form -->
+            <div class="kcl-booking-form-admin">
+                <h2><?php echo $edit_booking ? 'Edit Booking: ' . esc_html($edit_booking->booking_id) : 'Create New Booking'; ?></h2>
+                <form method="post">
+                    <?php wp_nonce_field('kcl_save_booking', 'kcl_booking_nonce'); ?>
+                    <?php if ($edit_booking) : ?>
+                    <input type="hidden" name="booking_db_id" value="<?php echo esc_attr($edit_booking->id); ?>">
+                    <?php endif; ?>
+                    
+                    <table class="form-table">
+                        <tr>
+                            <th><label for="guest_name">Guest Name *</label></th>
+                            <td><input type="text" id="guest_name" name="guest_name" class="regular-text" required value="<?php echo $edit_booking ? esc_attr($edit_booking->guest_name) : ''; ?>"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="guest_email">Guest Email *</label></th>
+                            <td><input type="email" id="guest_email" name="guest_email" class="regular-text" required value="<?php echo $edit_booking ? esc_attr($edit_booking->guest_email) : ''; ?>"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="guest_phone">Guest Phone *</label></th>
+                            <td><input type="text" id="guest_phone" name="guest_phone" class="regular-text" required value="<?php echo $edit_booking ? esc_attr($edit_booking->guest_phone) : ''; ?>"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="apartment_id">Apartment</label></th>
+                            <td>
+                                <select id="apartment_id" name="apartment_id">
+                                    <option value="">-- Select Apartment --</option>
+                                    <?php foreach ($apartments as $apt) : ?>
+                                    <option value="<?php echo esc_attr($apt->ID); ?>" <?php selected($edit_booking ? $edit_booking->apartment_id : '', $apt->ID); ?>><?php echo esc_html($apt->post_title); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="check_in">Check-in Date *</label></th>
+                            <td><input type="date" id="check_in" name="check_in" required value="<?php echo $edit_booking ? esc_attr($edit_booking->check_in) : ''; ?>"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="check_out">Check-out Date *</label></th>
+                            <td><input type="date" id="check_out" name="check_out" required value="<?php echo $edit_booking ? esc_attr($edit_booking->check_out) : ''; ?>"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="guests">Number of Guests</label></th>
+                            <td><input type="number" id="guests" name="guests" min="1" max="20" value="<?php echo $edit_booking ? esc_attr($edit_booking->guests) : '1'; ?>"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="total_amount">Total Amount (₦)</label></th>
+                            <td><input type="number" id="total_amount" name="total_amount" step="0.01" min="0" value="<?php echo $edit_booking ? esc_attr($edit_booking->total_amount) : ''; ?>"></td>
+                        </tr>
+                        <tr>
+                            <th><label for="payment_status">Payment Status</label></th>
+                            <td>
+                                <select id="payment_status" name="payment_status">
+                                    <option value="pending" <?php selected($edit_booking ? $edit_booking->payment_status : '', 'pending'); ?>>Pending</option>
+                                    <option value="completed" <?php selected($edit_booking ? $edit_booking->payment_status : '', 'completed'); ?>>Completed</option>
+                                    <option value="failed" <?php selected($edit_booking ? $edit_booking->payment_status : '', 'failed'); ?>>Failed</option>
+                                    <option value="refunded" <?php selected($edit_booking ? $edit_booking->payment_status : '', 'refunded'); ?>>Refunded</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="booking_status">Booking Status</label></th>
+                            <td>
+                                <select id="booking_status" name="booking_status">
+                                    <option value="pending" <?php selected($edit_booking ? $edit_booking->booking_status : '', 'pending'); ?>>Pending</option>
+                                    <option value="confirmed" <?php selected($edit_booking ? $edit_booking->booking_status : '', 'confirmed'); ?>>Confirmed</option>
+                                    <option value="cancelled" <?php selected($edit_booking ? $edit_booking->booking_status : '', 'cancelled'); ?>>Cancelled</option>
+                                    <option value="completed" <?php selected($edit_booking ? $edit_booking->booking_status : '', 'completed'); ?>>Completed</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="special_requests">Special Requests</label></th>
+                            <td><textarea id="special_requests" name="special_requests" rows="4" class="large-text"><?php echo $edit_booking ? esc_textarea($edit_booking->special_requests) : ''; ?></textarea></td>
+                        </tr>
+                    </table>
+                    
+                    <p class="submit">
+                        <?php if ($edit_booking) : ?>
+                        <input type="submit" name="kcl_update_booking" class="button button-primary" value="Update Booking">
+                        <?php else : ?>
+                        <input type="submit" name="kcl_create_booking" class="button button-primary" value="Create Booking">
+                        <?php endif; ?>
+                        <a href="<?php echo esc_url(admin_url('admin.php?page=kcl-bookings')); ?>" class="button">Cancel</a>
+                    </p>
+                </form>
+            </div>
+            <?php else : ?>
+            
             <div class="kcl-filter-bar">
+                <a href="<?php echo esc_url(admin_url('admin.php?page=kcl-bookings&action=new')); ?>" class="button button-primary"><span class="dashicons dashicons-plus-alt" style="vertical-align:middle;"></span> Add New Booking</a>
+                <span style="margin-left: 20px;"></span>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=kcl-bookings')); ?>" class="button <?php echo !$status_filter ? 'button-primary' : ''; ?>">All</a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=kcl-bookings&status=pending')); ?>" class="button <?php echo $status_filter === 'pending' ? 'button-primary' : ''; ?>">Pending</a>
                 <a href="<?php echo esc_url(admin_url('admin.php?page=kcl-bookings&status=confirmed')); ?>" class="button <?php echo $status_filter === 'confirmed' ? 'button-primary' : ''; ?>">Confirmed</a>
@@ -337,10 +494,12 @@ class KCL_Admin {
                         <td><span class="kcl-status kcl-status-<?php echo esc_attr($booking->payment_status); ?>"><?php echo esc_html(ucfirst($booking->payment_status)); ?></span></td>
                         <td><span class="kcl-status kcl-status-<?php echo esc_attr($booking->booking_status); ?>"><?php echo esc_html(ucfirst($booking->booking_status)); ?></span></td>
                         <td>
+                            <a href="<?php echo esc_url(admin_url('admin.php?page=kcl-bookings&action=edit&id=' . $booking->id)); ?>" class="button button-small"><span class="dashicons dashicons-edit" style="vertical-align:middle;"></span></a>
                             <?php if ($booking->booking_status === 'pending') : ?>
-                            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=kcl-bookings&action=confirm&id=' . $booking->id), 'kcl_confirm_booking')); ?>" class="button button-small button-primary">Confirm</a>
-                            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=kcl-bookings&action=cancel&id=' . $booking->id), 'kcl_cancel_booking')); ?>" class="button button-small">Cancel</a>
+                            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=kcl-bookings&action=confirm&id=' . $booking->id), 'kcl_confirm_booking')); ?>" class="button button-small button-primary" title="Confirm"><span class="dashicons dashicons-yes" style="vertical-align:middle;"></span></a>
+                            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=kcl-bookings&action=cancel&id=' . $booking->id), 'kcl_cancel_booking')); ?>" class="button button-small" title="Cancel"><span class="dashicons dashicons-no" style="vertical-align:middle;"></span></a>
                             <?php endif; ?>
+                            <a href="<?php echo esc_url(wp_nonce_url(admin_url('admin.php?page=kcl-bookings&action=delete&id=' . $booking->id), 'kcl_delete_booking')); ?>" class="button button-small" title="Delete" onclick="return confirm('Are you sure you want to delete this booking?');"><span class="dashicons dashicons-trash" style="vertical-align:middle;"></span></a>
                         </td>
                     </tr>
                     <?php endforeach; else : ?>
@@ -348,6 +507,7 @@ class KCL_Admin {
                     <?php endif; ?>
                 </tbody>
             </table>
+            <?php endif; ?>
         </div>
         <?php
     }
@@ -517,6 +677,169 @@ class KCL_Admin {
                 
                 <p class="submit">
                     <input type="submit" name="kcl_save_settings" class="button button-primary" value="Save Settings">
+                </p>
+            </form>
+        </div>
+        <?php
+    }
+    
+    public static function images_page() {
+        // Handle image saves
+        if (isset($_POST['kcl_save_images']) && wp_verify_nonce(isset($_POST['kcl_images_nonce']) ? sanitize_text_field(wp_unslash($_POST['kcl_images_nonce'])) : '', 'kcl_save_images')) {
+            $image_fields = array(
+                'kcl_hero_image', 'kcl_about_image', 'kcl_about_page_hero', 'kcl_about_page_story',
+                'kcl_team_member_1', 'kcl_team_member_2', 'kcl_team_member_3', 'kcl_team_member_4',
+                'kcl_logo_image', 'kcl_footer_logo'
+            );
+            foreach ($image_fields as $field) {
+                if (isset($_POST[$field])) {
+                    update_option($field, esc_url_raw(wp_unslash($_POST[$field])));
+                }
+            }
+            echo '<div class="notice notice-success"><p>Images saved successfully!</p></div>';
+        }
+        ?>
+        <div class="wrap kcl-admin-wrap">
+            <h1><span class="dashicons dashicons-format-image"></span> Site Images Management</h1>
+            <p>Upload and manage images for all sections of your site. Click on an image placeholder to upload a new image.</p>
+            
+            <form method="post" class="kcl-images-form">
+                <?php wp_nonce_field('kcl_save_images', 'kcl_images_nonce'); ?>
+                
+                <div class="kcl-images-grid">
+                    <div class="kcl-image-section">
+                        <h2>Homepage Images</h2>
+                        
+                        <div class="kcl-image-field">
+                            <label>Hero Section Image</label>
+                            <div class="kcl-image-preview" id="preview_kcl_hero_image">
+                                <?php $hero_img = get_option('kcl_hero_image'); ?>
+                                <?php if ($hero_img) : ?>
+                                    <img src="<?php echo esc_url($hero_img); ?>" alt="">
+                                <?php else : ?>
+                                    <span class="dashicons dashicons-format-image"></span>
+                                    <span>Click to upload</span>
+                                <?php endif; ?>
+                            </div>
+                            <input type="hidden" name="kcl_hero_image" id="kcl_hero_image" value="<?php echo esc_url(get_option('kcl_hero_image')); ?>">
+                            <button type="button" class="button kcl-upload-btn" data-target="kcl_hero_image">Upload Image</button>
+                            <button type="button" class="button kcl-remove-btn" data-target="kcl_hero_image">Remove</button>
+                        </div>
+                        
+                        <div class="kcl-image-field">
+                            <label>About Section Image (Homepage)</label>
+                            <div class="kcl-image-preview" id="preview_kcl_about_image">
+                                <?php $about_img = get_option('kcl_about_image'); ?>
+                                <?php if ($about_img) : ?>
+                                    <img src="<?php echo esc_url($about_img); ?>" alt="">
+                                <?php else : ?>
+                                    <span class="dashicons dashicons-format-image"></span>
+                                    <span>Click to upload</span>
+                                <?php endif; ?>
+                            </div>
+                            <input type="hidden" name="kcl_about_image" id="kcl_about_image" value="<?php echo esc_url(get_option('kcl_about_image')); ?>">
+                            <button type="button" class="button kcl-upload-btn" data-target="kcl_about_image">Upload Image</button>
+                            <button type="button" class="button kcl-remove-btn" data-target="kcl_about_image">Remove</button>
+                        </div>
+                    </div>
+                    
+                    <div class="kcl-image-section">
+                        <h2>About Page Images</h2>
+                        
+                        <div class="kcl-image-field">
+                            <label>About Page Hero Image</label>
+                            <div class="kcl-image-preview" id="preview_kcl_about_page_hero">
+                                <?php $about_hero = get_option('kcl_about_page_hero'); ?>
+                                <?php if ($about_hero) : ?>
+                                    <img src="<?php echo esc_url($about_hero); ?>" alt="">
+                                <?php else : ?>
+                                    <span class="dashicons dashicons-format-image"></span>
+                                    <span>Click to upload</span>
+                                <?php endif; ?>
+                            </div>
+                            <input type="hidden" name="kcl_about_page_hero" id="kcl_about_page_hero" value="<?php echo esc_url(get_option('kcl_about_page_hero')); ?>">
+                            <button type="button" class="button kcl-upload-btn" data-target="kcl_about_page_hero">Upload Image</button>
+                            <button type="button" class="button kcl-remove-btn" data-target="kcl_about_page_hero">Remove</button>
+                        </div>
+                        
+                        <div class="kcl-image-field">
+                            <label>About Page Story Image</label>
+                            <div class="kcl-image-preview" id="preview_kcl_about_page_story">
+                                <?php $about_story = get_option('kcl_about_page_story'); ?>
+                                <?php if ($about_story) : ?>
+                                    <img src="<?php echo esc_url($about_story); ?>" alt="">
+                                <?php else : ?>
+                                    <span class="dashicons dashicons-format-image"></span>
+                                    <span>Click to upload</span>
+                                <?php endif; ?>
+                            </div>
+                            <input type="hidden" name="kcl_about_page_story" id="kcl_about_page_story" value="<?php echo esc_url(get_option('kcl_about_page_story')); ?>">
+                            <button type="button" class="button kcl-upload-btn" data-target="kcl_about_page_story">Upload Image</button>
+                            <button type="button" class="button kcl-remove-btn" data-target="kcl_about_page_story">Remove</button>
+                        </div>
+                    </div>
+                    
+                    <div class="kcl-image-section">
+                        <h2>Team Member Images</h2>
+                        
+                        <?php for ($i = 1; $i <= 4; $i++) : ?>
+                        <div class="kcl-image-field">
+                            <label>Team Member <?php echo esc_html($i); ?></label>
+                            <div class="kcl-image-preview" id="preview_kcl_team_member_<?php echo esc_attr($i); ?>">
+                                <?php $team_img = get_option('kcl_team_member_' . $i); ?>
+                                <?php if ($team_img) : ?>
+                                    <img src="<?php echo esc_url($team_img); ?>" alt="">
+                                <?php else : ?>
+                                    <span class="dashicons dashicons-admin-users"></span>
+                                    <span>Click to upload</span>
+                                <?php endif; ?>
+                            </div>
+                            <input type="hidden" name="kcl_team_member_<?php echo esc_attr($i); ?>" id="kcl_team_member_<?php echo esc_attr($i); ?>" value="<?php echo esc_url(get_option('kcl_team_member_' . $i)); ?>">
+                            <button type="button" class="button kcl-upload-btn" data-target="kcl_team_member_<?php echo esc_attr($i); ?>">Upload Image</button>
+                            <button type="button" class="button kcl-remove-btn" data-target="kcl_team_member_<?php echo esc_attr($i); ?>">Remove</button>
+                        </div>
+                        <?php endfor; ?>
+                    </div>
+                    
+                    <div class="kcl-image-section">
+                        <h2>Logo Images</h2>
+                        
+                        <div class="kcl-image-field">
+                            <label>Site Logo (Header)</label>
+                            <div class="kcl-image-preview" id="preview_kcl_logo_image">
+                                <?php $logo_img = get_option('kcl_logo_image'); ?>
+                                <?php if ($logo_img) : ?>
+                                    <img src="<?php echo esc_url($logo_img); ?>" alt="">
+                                <?php else : ?>
+                                    <span class="dashicons dashicons-format-image"></span>
+                                    <span>Click to upload</span>
+                                <?php endif; ?>
+                            </div>
+                            <input type="hidden" name="kcl_logo_image" id="kcl_logo_image" value="<?php echo esc_url(get_option('kcl_logo_image')); ?>">
+                            <button type="button" class="button kcl-upload-btn" data-target="kcl_logo_image">Upload Image</button>
+                            <button type="button" class="button kcl-remove-btn" data-target="kcl_logo_image">Remove</button>
+                        </div>
+                        
+                        <div class="kcl-image-field">
+                            <label>Footer Logo</label>
+                            <div class="kcl-image-preview" id="preview_kcl_footer_logo">
+                                <?php $footer_logo = get_option('kcl_footer_logo'); ?>
+                                <?php if ($footer_logo) : ?>
+                                    <img src="<?php echo esc_url($footer_logo); ?>" alt="">
+                                <?php else : ?>
+                                    <span class="dashicons dashicons-format-image"></span>
+                                    <span>Click to upload</span>
+                                <?php endif; ?>
+                            </div>
+                            <input type="hidden" name="kcl_footer_logo" id="kcl_footer_logo" value="<?php echo esc_url(get_option('kcl_footer_logo')); ?>">
+                            <button type="button" class="button kcl-upload-btn" data-target="kcl_footer_logo">Upload Image</button>
+                            <button type="button" class="button kcl-remove-btn" data-target="kcl_footer_logo">Remove</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="submit">
+                    <input type="submit" name="kcl_save_images" class="button button-primary button-large" value="Save All Images">
                 </p>
             </form>
         </div>

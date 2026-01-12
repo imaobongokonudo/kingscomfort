@@ -246,3 +246,106 @@
         font-size: 22px;
     }
 }
+
+/* Site Images Management */
+.kcl-images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.kcl-image-section {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.kcl-image-section h2 {
+    margin: 0 0 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 16px;
+    color: #1d2327;
+}
+
+.kcl-image-field {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.kcl-image-field:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.kcl-image-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #1d2327;
+}
+
+.kcl-image-preview {
+    width: 100%;
+    height: 150px;
+    background: #f6f7f7;
+    border: 2px dashed #c3c4c7;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.kcl-image-preview:hover {
+    border-color: var(--kcl-primary);
+    background: #fefefe;
+}
+
+.kcl-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.kcl-image-preview .dashicons {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    color: #c3c4c7;
+    margin-bottom: 8px;
+}
+
+.kcl-image-preview span {
+    color: #646970;
+    font-size: 13px;
+}
+
+.kcl-image-field .button {
+    margin-right: 8px;
+}
+
+/* Booking Form Admin */
+.kcl-booking-form-admin {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    padding: 25px;
+    max-width: 800px;
+}
+
+.kcl-booking-form-admin h2 {
+    margin: 0 0 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 18px;
+    color: #1d2327;
+}

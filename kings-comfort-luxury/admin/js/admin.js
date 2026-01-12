@@ -14,6 +14,7 @@
             this.initMediaUploader();
             this.initConfirmations();
             this.initTabs();
+            this.initSiteImageUploader();
         },
 
         // Media Uploader for Gallery
@@ -58,6 +59,49 @@
                 });
 
                 mediaUploader.open();
+            });
+        },
+
+        // Site Images Uploader
+        initSiteImageUploader: function() {
+            // Upload button click
+            $('.kcl-upload-btn').on('click', function(e) {
+                e.preventDefault();
+                const targetId = $(this).data('target');
+                const $input = $('#' + targetId);
+                const $preview = $('#preview_' + targetId);
+
+                const mediaUploader = wp.media({
+                    title: 'Select Image',
+                    button: {
+                        text: 'Use this image'
+                    },
+                    multiple: false
+                });
+
+                mediaUploader.on('select', function() {
+                    const attachment = mediaUploader.state().get('selection').first().toJSON();
+                    $input.val(attachment.url);
+                    $preview.html('<img src="' + attachment.url + '" alt="">');
+                });
+
+                mediaUploader.open();
+            });
+
+            // Remove button click
+            $('.kcl-remove-btn').on('click', function(e) {
+                e.preventDefault();
+                const targetId = $(this).data('target');
+                const $input = $('#' + targetId);
+                const $preview = $('#preview_' + targetId);
+
+                $input.val('');
+                $preview.html('<span class="dashicons dashicons-format-image"></span><span>Click to upload</span>');
+            });
+
+            // Preview click to upload
+            $('.kcl-image-preview').on('click', function() {
+                $(this).siblings('.kcl-upload-btn').trigger('click');
             });
         },
 

@@ -97,7 +97,7 @@ class KCL_Shortcodes {
         <section class="kcl-hero kcl-section" data-section="hero">
             <div class="kcl-hero-overlay"></div>
             <div class="kcl-hero-content">
-                <h1 class="kcl-animate-fade-up">Experience <span class="kcl-gold">Luxury Living</span></h1>
+                <h1 class="kcl-animate-fade-up"><span class="kcl-heading-animate">Experience</span> <span class="kcl-gold">Luxury Living</span></h1>
                 <p class="kcl-animate-fade-up">Premium service apartments in the heart of Abuja</p>
                 <div class="kcl-hero-btns kcl-animate-fade-up">
                     <a href="<?php echo esc_url(home_url('/apartments/')); ?>" class="kcl-btn kcl-btn-primary">Explore Apartments</a>
