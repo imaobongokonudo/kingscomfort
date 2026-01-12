@@ -2013,6 +2013,27 @@ i[class*="fa-"] {
    Single Apartment Page Styles
    ============================================ */
 
+/* Hide default WordPress theme post header on single apartment pages */
+.single-kcl_apartment .entry-header,
+.single-kcl_apartment .post-header,
+.single-kcl_apartment .page-header,
+.single-kcl_apartment .entry-title,
+.single-kcl_apartment .entry-meta,
+.single-kcl_apartment .post-meta,
+.single-kcl_apartment .post-info,
+.single-kcl_apartment .byline,
+.single-kcl_apartment .posted-on,
+.single-kcl_apartment .author,
+.single-kcl_apartment article > header,
+.single-kcl_apartment .wp-block-post-title,
+.single-kcl_apartment .wp-block-post-date,
+.single-kcl_apartment .wp-block-post-author,
+.single-kcl_apartment .hentry > header:first-child,
+body.single-kcl_apartment article header.entry-header,
+body.single-kcl_apartment .type-kcl_apartment > header {
+    display: none !important;
+}
+
 .kcl-single-apartment {
     padding: 120px 0 60px;
     min-height: 100vh;
